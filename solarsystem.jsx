@@ -1,36 +1,56 @@
-// import Game from './components/game';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three'
+const OrbitControls = require('three-orbitcontrols')
+import Clock from './components/clock'
+import StarFiled from './components/starfield'
+import Solar from './components/solar'
 
+
+
+export let scene = new THREE.Scene();
+export let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 2000 );
+export let renderer = new THREE.WebGLRenderer();
+export let Universe  = new THREE.Object3D()
+export let controls = new OrbitControls( camera, renderer.domElement );
+
+scene.add(Universe)
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	// required if controls.enableDamping or controls.autoRotate are set to true
+	controls.update();
+
+	renderer.render( scene, camera );
+
+}
+
+animate()
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById('root')
-    var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-
-        var renderer = new THREE.WebGLRenderer();
+    
+    
+    
+    function Root() {
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
+        camera.position.z = 400;
+        return(
+            <div>
+          <div id="overlay"></div>
+        <Clock />
+        <StarFiled width={window.innerWidth} height = {window.innerHeight}/>
+        <Solar />
+        
+      </div>
+    );
+}
 
-        var geometry = new THREE.BoxGeometry();
-        var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        var cube = new THREE.Mesh( geometry, material );
-        scene.add( cube );
 
-        camera.position.z = 5;
-
-        var animate = function () {
-            requestAnimationFrame( animate );
-
-            // cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
-            renderer.render( scene, camera );
-        };
-
-        // animate();
   ReactDOM.render(
-	  animate(),
+	  <Root/>,
 	  root
   );
 });

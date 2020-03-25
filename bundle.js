@@ -86,6 +86,391 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./components/clock.js":
+/*!*****************************!*\
+  !*** ./components/clock.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Clock; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Clock = /*#__PURE__*/function (_React$Component) {
+  _inherits(Clock, _React$Component);
+
+  var _super = _createSuper(Clock);
+
+  function Clock(props) {
+    var _this;
+
+    _classCallCheck(this, Clock);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      time: new Date()
+    };
+    _this.tick = _this.tick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Clock, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.intervalId = setInterval(this.tick, 1000);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.intervalId);
+    }
+  }, {
+    key: "tick",
+    value: function tick() {
+      this.setState({
+        time: new Date()
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var hours = this.state.time.getHours();
+      var minutes = this.state.time.getMinutes();
+      var seconds = this.state.time.getSeconds();
+      hours = hours < 10 ? "0".concat(hours) : hours;
+      minutes = minutes < 10 ? "0".concat(minutes) : minutes;
+      seconds = seconds < 10 ? "0".concat(seconds) : seconds;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "clock"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Clock"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "clock"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Time:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, hours, ":", minutes, ":", seconds, " PDT")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Date: ", this.state.time.toDateString())));
+    }
+  }]);
+
+  return Clock;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+;
+
+/***/ }),
+
+/***/ "./components/solar.jsx":
+/*!******************************!*\
+  !*** ./components/solar.jsx ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return solar; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/* harmony import */ var _solarsystem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../solarsystem */ "./solarsystem.jsx");
+/* harmony import */ var _utils_orbit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/orbit */ "./utils/orbit.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var solar = /*#__PURE__*/function (_Component) {
+  _inherits(solar, _Component);
+
+  var _super = _createSuper(solar);
+
+  function solar() {
+    var _this;
+
+    _classCallCheck(this, solar);
+
+    _this = _super.call(this);
+
+    _this.addSolar();
+
+    return _this;
+  }
+
+  _createClass(solar, [{
+    key: "addSolar",
+    value: function addSolar() {
+      // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
+      var solarSystem = new three__WEBPACK_IMPORTED_MODULE_1__["Object3D"]();
+      _solarsystem__WEBPACK_IMPORTED_MODULE_2__["Universe"].add(solarSystem); // Make a sphere (exactly the same as before). 
+
+      var sungeometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.42, 16, 16);
+      var texture = new three__WEBPACK_IMPORTED_MODULE_1__["TextureLoader"]().load("https://solartextures.b-cdn.net/8k_sun.jpg");
+      var sunmaterial = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({
+        map: texture
+      });
+      var sun = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](sungeometry, sunmaterial); // var sungeometry = new THREE.SphereBufferGeometry( 0.4, 32, 32 );
+      // var sunwireframe = new THREE.EdgesGeometry( sungeometry );
+      // var line = new THREE.LineSegments( sungeometry );
+      // line.material.depthTest = false;
+      // line.material.opacity = 0.25;
+      // line.material.transparent = true;
+      // This time we give the sun random x and y positions between -500 and 500
+      // sun.position.x = 0;
+      // sun.position.y = 0;
+      // sun.position.z = 0;
+
+      sun.position.set(0, 0, 0); // scale it up a bit
+      //add the sun to the Universe
+
+      solarSystem.add(sun);
+      var customMaterial = new three__WEBPACK_IMPORTED_MODULE_1__["ShaderMaterial"]({
+        uniforms: {
+          "c": {
+            type: "f",
+            value: 0.5
+          },
+          "p": {
+            type: "f",
+            value: 2.0
+          },
+          glowColor: {
+            type: "c",
+            value: new three__WEBPACK_IMPORTED_MODULE_1__["Color"](0x00ffff)
+          }
+        },
+        vertexShader: document.getElementById('vertexShaderAtmosphere').textContent,
+        fragmentShader: document.getElementById('fragmentShaderAtmosphere').textContent,
+        side: three__WEBPACK_IMPORTED_MODULE_1__["FrontSide"],
+        blending: three__WEBPACK_IMPORTED_MODULE_1__["AdditiveBlending"],
+        transparent: true
+      });
+      var glow = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.5, 16, 16);
+      var corona = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](glow, customMaterial);
+      _solarsystem__WEBPACK_IMPORTED_MODULE_2__["scene"].add(corona);
+      var light = new three__WEBPACK_IMPORTED_MODULE_1__["PointLight"](0xFFFF00, 100, 0);
+      light.position.set(0, 0, 0);
+      solarSystem.add(light);
+
+      for (var i = 1; i < 10; i += 1) {
+        var planet = Object.values(_utils_orbit__WEBPACK_IMPORTED_MODULE_3__["Orbit"])[i];
+        var xRadius = (planet.max_dis + planet.min_dis) / 2;
+        var yRadius = Math.sqrt(planet.min_dis * planet.max_dis);
+        var inclination = planet.inclination / 180 * Math.PI;
+        var curve = new three__WEBPACK_IMPORTED_MODULE_1__["EllipseCurve"](0, 0, // ax, aY
+        xRadius / 10, yRadius / 10, // xRadius, yRadius
+        0, 2 * Math.PI, // aStartAngle, aEndAngle
+        false, // aClockwise
+        0 // aRotation
+        );
+        var numOfPoints = 1000; // var points = curve.getPoints( numOfPoints );
+
+        var geometry = new three__WEBPACK_IMPORTED_MODULE_1__["BufferGeometry"]();
+        var vertices = [];
+        var colors2 = [];
+        var point = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"]();
+        var color = new three__WEBPACK_IMPORTED_MODULE_1__["Color"]();
+        var startp = Math.random();
+
+        for (var j = 0; j < numOfPoints; j++) {
+          var t = j / numOfPoints + startp - Math.floor(j / numOfPoints + startp);
+          curve.getPoint(t, point);
+          vertices.push(point.x, point.y, 0);
+          color.setHSL(i / 9 * 0.5, 0.3, Math.max(0, 0.5 * j / numOfPoints));
+          colors2.push(color.r, color.g, color.b);
+        }
+
+        geometry.setAttribute('position', new three__WEBPACK_IMPORTED_MODULE_1__["Float32BufferAttribute"](vertices, 3));
+        geometry.setAttribute('color', new three__WEBPACK_IMPORTED_MODULE_1__["Float32BufferAttribute"](colors2, 3));
+        var material = new three__WEBPACK_IMPORTED_MODULE_1__["LineBasicMaterial"]({
+          color: 0xffffff,
+          vertexColors: true,
+          linewidth: 2
+        }); // Create the final object to add to the Universe
+
+        var ellipse = new three__WEBPACK_IMPORTED_MODULE_1__["Line"](geometry, material);
+        ellipse.rotation.set(Math.PI / 2, inclination, 0);
+        solarSystem.add(ellipse);
+      } //finally push it to the stars array 
+      // stars.push(sphere); 
+      // renderer.render( scene, camera );
+
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      //get the frame
+      // requestAnimationFrame( renderer );
+      //render the scene
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "sun"
+      });
+    }
+  }]);
+
+  return solar;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./components/starfield.jsx":
+/*!**********************************!*\
+  !*** ./components/starfield.jsx ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StarField; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/* harmony import */ var _solarsystem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../solarsystem */ "./solarsystem.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var StarField = /*#__PURE__*/function (_Component) {
+  _inherits(StarField, _Component);
+
+  var _super = _createSuper(StarField);
+
+  function StarField(props) {
+    var _this;
+
+    _classCallCheck(this, StarField);
+
+    _this = _super.call(this, props);
+
+    _this.addSphere();
+
+    return _this;
+  }
+
+  _createClass(StarField, [{
+    key: "addSphere",
+    value: function addSphere() {
+      var _this$props = this.props,
+          width = _this$props.width,
+          height = _this$props.height;
+      var colors = [0xffffff, 0xFFFF00, 0x87cefa]; // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
+
+      for (var i = 0; i < 1500; i += 1) {
+        // Make a sphere (exactly the same as before). 
+        var color = colors[Math.floor(Math.random() * 3)];
+        var geometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](1.2, 32, 32);
+        var material = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({
+          color: color
+        });
+        var sphere = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](geometry, material); // var light = new THREE.PointLight( 0xff0000, 5, 100 )
+
+        var theta = Math.random() * Math.PI;
+        var alpha = Math.random() * Math.PI * 2;
+        var length = Math.random() * 1000 + 800; // This time we give the sphere random x and y positions between -500 and 500
+
+        var y = length * Math.cos(theta);
+        var x = length * Math.sin(theta) * Math.cos(alpha); // Then set the z position to where it is in the loop (distance of camera)
+
+        var z = length * Math.sin(theta) * Math.sin(alpha);
+        sphere.position.set(x, y, z); // light.position.set(x, y, z)
+        // scale it up a bit
+        // sphere.scale.x = sphere.scale.y = 2;
+        //add the sphere to the Universe
+
+        _solarsystem__WEBPACK_IMPORTED_MODULE_2__["Universe"].add(sphere); // Universe.add( light );
+        //finally push it to the stars array 
+        // stars.push(sphere); 
+        // renderer.render( scene, camera );
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      //get the frame
+      // requestAnimationFrame( renderer );
+      //render the Universe
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "starfield"
+      });
+    }
+  }]);
+
+  return StarField;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -28597,6 +28982,1199 @@ if (false) {} else {
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/three-orbitcontrols/OrbitControls.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/three-orbitcontrols/OrbitControls.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* three-orbitcontrols addendum */ var THREE = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/**
+ * @author qiao / https://github.com/qiao
+ * @author mrdoob / http://mrdoob.com
+ * @author alteredq / http://alteredqualia.com/
+ * @author WestLangley / http://github.com/WestLangley
+ * @author erich666 / http://erichaines.com
+ * @author ScieCode / http://github.com/sciecode
+ */
+
+// This set of controls performs orbiting, dollying (zooming), and panning.
+// Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
+//
+//    Orbit - left mouse / touch: one-finger move
+//    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
+//    Pan - right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move
+
+THREE.OrbitControls = function ( object, domElement ) {
+
+	if ( domElement === undefined ) console.warn( 'THREE.OrbitControls: The second parameter "domElement" is now mandatory.' );
+	if ( domElement === document ) console.error( 'THREE.OrbitControls: "document" should not be used as the target "domElement". Please use "renderer.domElement" instead.' );
+
+	this.object = object;
+	this.domElement = domElement;
+
+	// Set to false to disable this control
+	this.enabled = true;
+
+	// "target" sets the location of focus, where the object orbits around
+	this.target = new THREE.Vector3();
+
+	// How far you can dolly in and out ( PerspectiveCamera only )
+	this.minDistance = 0;
+	this.maxDistance = Infinity;
+
+	// How far you can zoom in and out ( OrthographicCamera only )
+	this.minZoom = 0;
+	this.maxZoom = Infinity;
+
+	// How far you can orbit vertically, upper and lower limits.
+	// Range is 0 to Math.PI radians.
+	this.minPolarAngle = 0; // radians
+	this.maxPolarAngle = Math.PI; // radians
+
+	// How far you can orbit horizontally, upper and lower limits.
+	// If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
+	this.minAzimuthAngle = - Infinity; // radians
+	this.maxAzimuthAngle = Infinity; // radians
+
+	// Set to true to enable damping (inertia)
+	// If damping is enabled, you must call controls.update() in your animation loop
+	this.enableDamping = false;
+	this.dampingFactor = 0.05;
+
+	// This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
+	// Set to false to disable zooming
+	this.enableZoom = true;
+	this.zoomSpeed = 1.0;
+
+	// Set to false to disable rotating
+	this.enableRotate = true;
+	this.rotateSpeed = 1.0;
+
+	// Set to false to disable panning
+	this.enablePan = true;
+	this.panSpeed = 1.0;
+	this.screenSpacePanning = false; // if true, pan in screen-space
+	this.keyPanSpeed = 7.0;	// pixels moved per arrow key push
+
+	// Set to true to automatically rotate around the target
+	// If auto-rotate is enabled, you must call controls.update() in your animation loop
+	this.autoRotate = false;
+	this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
+
+	// Set to false to disable use of the keys
+	this.enableKeys = true;
+
+	// The four arrow keys
+	this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
+
+	// Mouse buttons
+	this.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
+
+	// Touch fingers
+	this.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+
+	// for reset
+	this.target0 = this.target.clone();
+	this.position0 = this.object.position.clone();
+	this.zoom0 = this.object.zoom;
+
+	//
+	// public methods
+	//
+
+	this.getPolarAngle = function () {
+
+		return spherical.phi;
+
+	};
+
+	this.getAzimuthalAngle = function () {
+
+		return spherical.theta;
+
+	};
+
+	this.saveState = function () {
+
+		scope.target0.copy( scope.target );
+		scope.position0.copy( scope.object.position );
+		scope.zoom0 = scope.object.zoom;
+
+	};
+
+	this.reset = function () {
+
+		scope.target.copy( scope.target0 );
+		scope.object.position.copy( scope.position0 );
+		scope.object.zoom = scope.zoom0;
+
+		scope.object.updateProjectionMatrix();
+		scope.dispatchEvent( changeEvent );
+
+		scope.update();
+
+		state = STATE.NONE;
+
+	};
+
+	// this method is exposed, but perhaps it would be better if we can make it private...
+	this.update = function () {
+
+		var offset = new THREE.Vector3();
+
+		// so camera.up is the orbit axis
+		var quat = new THREE.Quaternion().setFromUnitVectors( object.up, new THREE.Vector3( 0, 1, 0 ) );
+		var quatInverse = quat.clone().inverse();
+
+		var lastPosition = new THREE.Vector3();
+		var lastQuaternion = new THREE.Quaternion();
+
+		return function update() {
+
+			var position = scope.object.position;
+
+			offset.copy( position ).sub( scope.target );
+
+			// rotate offset to "y-axis-is-up" space
+			offset.applyQuaternion( quat );
+
+			// angle from z-axis around y-axis
+			spherical.setFromVector3( offset );
+
+			if ( scope.autoRotate && state === STATE.NONE ) {
+
+				rotateLeft( getAutoRotationAngle() );
+
+			}
+
+			if ( scope.enableDamping ) {
+
+				spherical.theta += sphericalDelta.theta * scope.dampingFactor;
+				spherical.phi += sphericalDelta.phi * scope.dampingFactor;
+
+			} else {
+
+				spherical.theta += sphericalDelta.theta;
+				spherical.phi += sphericalDelta.phi;
+
+			}
+
+			// restrict theta to be between desired limits
+			spherical.theta = Math.max( scope.minAzimuthAngle, Math.min( scope.maxAzimuthAngle, spherical.theta ) );
+
+			// restrict phi to be between desired limits
+			spherical.phi = Math.max( scope.minPolarAngle, Math.min( scope.maxPolarAngle, spherical.phi ) );
+
+			spherical.makeSafe();
+
+
+			spherical.radius *= scale;
+
+			// restrict radius to be between desired limits
+			spherical.radius = Math.max( scope.minDistance, Math.min( scope.maxDistance, spherical.radius ) );
+
+			// move target to panned location
+
+			if ( scope.enableDamping === true ) {
+
+				scope.target.addScaledVector( panOffset, scope.dampingFactor );
+
+			} else {
+
+				scope.target.add( panOffset );
+
+			}
+
+			offset.setFromSpherical( spherical );
+
+			// rotate offset back to "camera-up-vector-is-up" space
+			offset.applyQuaternion( quatInverse );
+
+			position.copy( scope.target ).add( offset );
+
+			scope.object.lookAt( scope.target );
+
+			if ( scope.enableDamping === true ) {
+
+				sphericalDelta.theta *= ( 1 - scope.dampingFactor );
+				sphericalDelta.phi *= ( 1 - scope.dampingFactor );
+
+				panOffset.multiplyScalar( 1 - scope.dampingFactor );
+
+			} else {
+
+				sphericalDelta.set( 0, 0, 0 );
+
+				panOffset.set( 0, 0, 0 );
+
+			}
+
+			scale = 1;
+
+			// update condition is:
+			// min(camera displacement, camera rotation in radians)^2 > EPS
+			// using small-angle approximation cos(x/2) = 1 - x^2 / 8
+
+			if ( zoomChanged ||
+				lastPosition.distanceToSquared( scope.object.position ) > EPS ||
+				8 * ( 1 - lastQuaternion.dot( scope.object.quaternion ) ) > EPS ) {
+
+				scope.dispatchEvent( changeEvent );
+
+				lastPosition.copy( scope.object.position );
+				lastQuaternion.copy( scope.object.quaternion );
+				zoomChanged = false;
+
+				return true;
+
+			}
+
+			return false;
+
+		};
+
+	}();
+
+	this.dispose = function () {
+
+		scope.domElement.removeEventListener( 'contextmenu', onContextMenu, false );
+		scope.domElement.removeEventListener( 'mousedown', onMouseDown, false );
+		scope.domElement.removeEventListener( 'wheel', onMouseWheel, false );
+
+		scope.domElement.removeEventListener( 'touchstart', onTouchStart, false );
+		scope.domElement.removeEventListener( 'touchend', onTouchEnd, false );
+		scope.domElement.removeEventListener( 'touchmove', onTouchMove, false );
+
+		document.removeEventListener( 'mousemove', onMouseMove, false );
+		document.removeEventListener( 'mouseup', onMouseUp, false );
+
+		scope.domElement.removeEventListener( 'keydown', onKeyDown, false );
+
+		//scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
+
+	};
+
+	//
+	// internals
+	//
+
+	var scope = this;
+
+	var changeEvent = { type: 'change' };
+	var startEvent = { type: 'start' };
+	var endEvent = { type: 'end' };
+
+	var STATE = {
+		NONE: - 1,
+		ROTATE: 0,
+		DOLLY: 1,
+		PAN: 2,
+		TOUCH_ROTATE: 3,
+		TOUCH_PAN: 4,
+		TOUCH_DOLLY_PAN: 5,
+		TOUCH_DOLLY_ROTATE: 6
+	};
+
+	var state = STATE.NONE;
+
+	var EPS = 0.000001;
+
+	// current position in spherical coordinates
+	var spherical = new THREE.Spherical();
+	var sphericalDelta = new THREE.Spherical();
+
+	var scale = 1;
+	var panOffset = new THREE.Vector3();
+	var zoomChanged = false;
+
+	var rotateStart = new THREE.Vector2();
+	var rotateEnd = new THREE.Vector2();
+	var rotateDelta = new THREE.Vector2();
+
+	var panStart = new THREE.Vector2();
+	var panEnd = new THREE.Vector2();
+	var panDelta = new THREE.Vector2();
+
+	var dollyStart = new THREE.Vector2();
+	var dollyEnd = new THREE.Vector2();
+	var dollyDelta = new THREE.Vector2();
+
+	function getAutoRotationAngle() {
+
+		return 2 * Math.PI / 60 / 60 * scope.autoRotateSpeed;
+
+	}
+
+	function getZoomScale() {
+
+		return Math.pow( 0.95, scope.zoomSpeed );
+
+	}
+
+	function rotateLeft( angle ) {
+
+		sphericalDelta.theta -= angle;
+
+	}
+
+	function rotateUp( angle ) {
+
+		sphericalDelta.phi -= angle;
+
+	}
+
+	var panLeft = function () {
+
+		var v = new THREE.Vector3();
+
+		return function panLeft( distance, objectMatrix ) {
+
+			v.setFromMatrixColumn( objectMatrix, 0 ); // get X column of objectMatrix
+			v.multiplyScalar( - distance );
+
+			panOffset.add( v );
+
+		};
+
+	}();
+
+	var panUp = function () {
+
+		var v = new THREE.Vector3();
+
+		return function panUp( distance, objectMatrix ) {
+
+			if ( scope.screenSpacePanning === true ) {
+
+				v.setFromMatrixColumn( objectMatrix, 1 );
+
+			} else {
+
+				v.setFromMatrixColumn( objectMatrix, 0 );
+				v.crossVectors( scope.object.up, v );
+
+			}
+
+			v.multiplyScalar( distance );
+
+			panOffset.add( v );
+
+		};
+
+	}();
+
+	// deltaX and deltaY are in pixels; right and down are positive
+	var pan = function () {
+
+		var offset = new THREE.Vector3();
+
+		return function pan( deltaX, deltaY ) {
+
+			var element = scope.domElement;
+
+			if ( scope.object.isPerspectiveCamera ) {
+
+				// perspective
+				var position = scope.object.position;
+				offset.copy( position ).sub( scope.target );
+				var targetDistance = offset.length();
+
+				// half of the fov is center to top of screen
+				targetDistance *= Math.tan( ( scope.object.fov / 2 ) * Math.PI / 180.0 );
+
+				// we use only clientHeight here so aspect ratio does not distort speed
+				panLeft( 2 * deltaX * targetDistance / element.clientHeight, scope.object.matrix );
+				panUp( 2 * deltaY * targetDistance / element.clientHeight, scope.object.matrix );
+
+			} else if ( scope.object.isOrthographicCamera ) {
+
+				// orthographic
+				panLeft( deltaX * ( scope.object.right - scope.object.left ) / scope.object.zoom / element.clientWidth, scope.object.matrix );
+				panUp( deltaY * ( scope.object.top - scope.object.bottom ) / scope.object.zoom / element.clientHeight, scope.object.matrix );
+
+			} else {
+
+				// camera neither orthographic nor perspective
+				console.warn( 'WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.' );
+				scope.enablePan = false;
+
+			}
+
+		};
+
+	}();
+
+	function dollyIn( dollyScale ) {
+
+		if ( scope.object.isPerspectiveCamera ) {
+
+			scale /= dollyScale;
+
+		} else if ( scope.object.isOrthographicCamera ) {
+
+			scope.object.zoom = Math.max( scope.minZoom, Math.min( scope.maxZoom, scope.object.zoom * dollyScale ) );
+			scope.object.updateProjectionMatrix();
+			zoomChanged = true;
+
+		} else {
+
+			console.warn( 'WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.' );
+			scope.enableZoom = false;
+
+		}
+
+	}
+
+	function dollyOut( dollyScale ) {
+
+		if ( scope.object.isPerspectiveCamera ) {
+
+			scale *= dollyScale;
+
+		} else if ( scope.object.isOrthographicCamera ) {
+
+			scope.object.zoom = Math.max( scope.minZoom, Math.min( scope.maxZoom, scope.object.zoom / dollyScale ) );
+			scope.object.updateProjectionMatrix();
+			zoomChanged = true;
+
+		} else {
+
+			console.warn( 'WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.' );
+			scope.enableZoom = false;
+
+		}
+
+	}
+
+	//
+	// event callbacks - update the object state
+	//
+
+	function handleMouseDownRotate( event ) {
+
+		rotateStart.set( event.clientX, event.clientY );
+
+	}
+
+	function handleMouseDownDolly( event ) {
+
+		dollyStart.set( event.clientX, event.clientY );
+
+	}
+
+	function handleMouseDownPan( event ) {
+
+		panStart.set( event.clientX, event.clientY );
+
+	}
+
+	function handleMouseMoveRotate( event ) {
+
+		rotateEnd.set( event.clientX, event.clientY );
+
+		rotateDelta.subVectors( rotateEnd, rotateStart ).multiplyScalar( scope.rotateSpeed );
+
+		var element = scope.domElement;
+
+		rotateLeft( 2 * Math.PI * rotateDelta.x / element.clientHeight ); // yes, height
+
+		rotateUp( 2 * Math.PI * rotateDelta.y / element.clientHeight );
+
+		rotateStart.copy( rotateEnd );
+
+		scope.update();
+
+	}
+
+	function handleMouseMoveDolly( event ) {
+
+		dollyEnd.set( event.clientX, event.clientY );
+
+		dollyDelta.subVectors( dollyEnd, dollyStart );
+
+		if ( dollyDelta.y > 0 ) {
+
+			dollyIn( getZoomScale() );
+
+		} else if ( dollyDelta.y < 0 ) {
+
+			dollyOut( getZoomScale() );
+
+		}
+
+		dollyStart.copy( dollyEnd );
+
+		scope.update();
+
+	}
+
+	function handleMouseMovePan( event ) {
+
+		panEnd.set( event.clientX, event.clientY );
+
+		panDelta.subVectors( panEnd, panStart ).multiplyScalar( scope.panSpeed );
+
+		pan( panDelta.x, panDelta.y );
+
+		panStart.copy( panEnd );
+
+		scope.update();
+
+	}
+
+	function handleMouseUp( /*event*/ ) {
+
+		// no-op
+
+	}
+
+	function handleMouseWheel( event ) {
+
+		if ( event.deltaY < 0 ) {
+
+			dollyOut( getZoomScale() );
+
+		} else if ( event.deltaY > 0 ) {
+
+			dollyIn( getZoomScale() );
+
+		}
+
+		scope.update();
+
+	}
+
+	function handleKeyDown( event ) {
+
+		var needsUpdate = false;
+
+		switch ( event.keyCode ) {
+
+			case scope.keys.UP:
+				pan( 0, scope.keyPanSpeed );
+				needsUpdate = true;
+				break;
+
+			case scope.keys.BOTTOM:
+				pan( 0, - scope.keyPanSpeed );
+				needsUpdate = true;
+				break;
+
+			case scope.keys.LEFT:
+				pan( scope.keyPanSpeed, 0 );
+				needsUpdate = true;
+				break;
+
+			case scope.keys.RIGHT:
+				pan( - scope.keyPanSpeed, 0 );
+				needsUpdate = true;
+				break;
+
+		}
+
+		if ( needsUpdate ) {
+
+			// prevent the browser from scrolling on cursor keys
+			event.preventDefault();
+
+			scope.update();
+
+		}
+
+
+	}
+
+	function handleTouchStartRotate( event ) {
+
+		if ( event.touches.length == 1 ) {
+
+			rotateStart.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+
+		} else {
+
+			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
+			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+
+			rotateStart.set( x, y );
+
+		}
+
+	}
+
+	function handleTouchStartPan( event ) {
+
+		if ( event.touches.length == 1 ) {
+
+			panStart.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+
+		} else {
+
+			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
+			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+
+			panStart.set( x, y );
+
+		}
+
+	}
+
+	function handleTouchStartDolly( event ) {
+
+		var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+		var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+
+		var distance = Math.sqrt( dx * dx + dy * dy );
+
+		dollyStart.set( 0, distance );
+
+	}
+
+	function handleTouchStartDollyPan( event ) {
+
+		if ( scope.enableZoom ) handleTouchStartDolly( event );
+
+		if ( scope.enablePan ) handleTouchStartPan( event );
+
+	}
+
+	function handleTouchStartDollyRotate( event ) {
+
+		if ( scope.enableZoom ) handleTouchStartDolly( event );
+
+		if ( scope.enableRotate ) handleTouchStartRotate( event );
+
+	}
+
+	function handleTouchMoveRotate( event ) {
+
+		if ( event.touches.length == 1 ) {
+
+			rotateEnd.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+
+		} else {
+
+			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
+			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+
+			rotateEnd.set( x, y );
+
+		}
+
+		rotateDelta.subVectors( rotateEnd, rotateStart ).multiplyScalar( scope.rotateSpeed );
+
+		var element = scope.domElement;
+
+		rotateLeft( 2 * Math.PI * rotateDelta.x / element.clientHeight ); // yes, height
+
+		rotateUp( 2 * Math.PI * rotateDelta.y / element.clientHeight );
+
+		rotateStart.copy( rotateEnd );
+
+	}
+
+	function handleTouchMovePan( event ) {
+
+		if ( event.touches.length == 1 ) {
+
+			panEnd.set( event.touches[ 0 ].pageX, event.touches[ 0 ].pageY );
+
+		} else {
+
+			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
+			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+
+			panEnd.set( x, y );
+
+		}
+
+		panDelta.subVectors( panEnd, panStart ).multiplyScalar( scope.panSpeed );
+
+		pan( panDelta.x, panDelta.y );
+
+		panStart.copy( panEnd );
+
+	}
+
+	function handleTouchMoveDolly( event ) {
+
+		var dx = event.touches[ 0 ].pageX - event.touches[ 1 ].pageX;
+		var dy = event.touches[ 0 ].pageY - event.touches[ 1 ].pageY;
+
+		var distance = Math.sqrt( dx * dx + dy * dy );
+
+		dollyEnd.set( 0, distance );
+
+		dollyDelta.set( 0, Math.pow( dollyEnd.y / dollyStart.y, scope.zoomSpeed ) );
+
+		dollyIn( dollyDelta.y );
+
+		dollyStart.copy( dollyEnd );
+
+	}
+
+	function handleTouchMoveDollyPan( event ) {
+
+		if ( scope.enableZoom ) handleTouchMoveDolly( event );
+
+		if ( scope.enablePan ) handleTouchMovePan( event );
+
+	}
+
+	function handleTouchMoveDollyRotate( event ) {
+
+		if ( scope.enableZoom ) handleTouchMoveDolly( event );
+
+		if ( scope.enableRotate ) handleTouchMoveRotate( event );
+
+	}
+
+	function handleTouchEnd( /*event*/ ) {
+
+		// no-op
+
+	}
+
+	//
+	// event handlers - FSM: listen for events and reset state
+	//
+
+	function onMouseDown( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		// Prevent the browser from scrolling.
+
+		event.preventDefault();
+
+		// Manually set the focus since calling preventDefault above
+		// prevents the browser from setting it automatically.
+
+		scope.domElement.focus ? scope.domElement.focus() : window.focus();
+
+		switch ( event.button ) {
+
+			case 0:
+
+				switch ( scope.mouseButtons.LEFT ) {
+
+					case THREE.MOUSE.ROTATE:
+
+						if ( event.ctrlKey || event.metaKey || event.shiftKey ) {
+
+							if ( scope.enablePan === false ) return;
+
+							handleMouseDownPan( event );
+
+							state = STATE.PAN;
+
+						} else {
+
+							if ( scope.enableRotate === false ) return;
+
+							handleMouseDownRotate( event );
+
+							state = STATE.ROTATE;
+
+						}
+
+						break;
+
+					case THREE.MOUSE.PAN:
+
+						if ( event.ctrlKey || event.metaKey || event.shiftKey ) {
+
+							if ( scope.enableRotate === false ) return;
+
+							handleMouseDownRotate( event );
+
+							state = STATE.ROTATE;
+
+						} else {
+
+							if ( scope.enablePan === false ) return;
+
+							handleMouseDownPan( event );
+
+							state = STATE.PAN;
+
+						}
+
+						break;
+
+					default:
+
+						state = STATE.NONE;
+
+				}
+
+				break;
+
+
+			case 1:
+
+				switch ( scope.mouseButtons.MIDDLE ) {
+
+					case THREE.MOUSE.DOLLY:
+
+						if ( scope.enableZoom === false ) return;
+
+						handleMouseDownDolly( event );
+
+						state = STATE.DOLLY;
+
+						break;
+
+
+					default:
+
+						state = STATE.NONE;
+
+				}
+
+				break;
+
+			case 2:
+
+				switch ( scope.mouseButtons.RIGHT ) {
+
+					case THREE.MOUSE.ROTATE:
+
+						if ( scope.enableRotate === false ) return;
+
+						handleMouseDownRotate( event );
+
+						state = STATE.ROTATE;
+
+						break;
+
+					case THREE.MOUSE.PAN:
+
+						if ( scope.enablePan === false ) return;
+
+						handleMouseDownPan( event );
+
+						state = STATE.PAN;
+
+						break;
+
+					default:
+
+						state = STATE.NONE;
+
+				}
+
+				break;
+
+		}
+
+		if ( state !== STATE.NONE ) {
+
+			document.addEventListener( 'mousemove', onMouseMove, false );
+			document.addEventListener( 'mouseup', onMouseUp, false );
+
+			scope.dispatchEvent( startEvent );
+
+		}
+
+	}
+
+	function onMouseMove( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		event.preventDefault();
+
+		switch ( state ) {
+
+			case STATE.ROTATE:
+
+				if ( scope.enableRotate === false ) return;
+
+				handleMouseMoveRotate( event );
+
+				break;
+
+			case STATE.DOLLY:
+
+				if ( scope.enableZoom === false ) return;
+
+				handleMouseMoveDolly( event );
+
+				break;
+
+			case STATE.PAN:
+
+				if ( scope.enablePan === false ) return;
+
+				handleMouseMovePan( event );
+
+				break;
+
+		}
+
+	}
+
+	function onMouseUp( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		handleMouseUp( event );
+
+		document.removeEventListener( 'mousemove', onMouseMove, false );
+		document.removeEventListener( 'mouseup', onMouseUp, false );
+
+		scope.dispatchEvent( endEvent );
+
+		state = STATE.NONE;
+
+	}
+
+	function onMouseWheel( event ) {
+
+		if ( scope.enabled === false || scope.enableZoom === false || ( state !== STATE.NONE && state !== STATE.ROTATE ) ) return;
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		scope.dispatchEvent( startEvent );
+
+		handleMouseWheel( event );
+
+		scope.dispatchEvent( endEvent );
+
+	}
+
+	function onKeyDown( event ) {
+
+		if ( scope.enabled === false || scope.enableKeys === false || scope.enablePan === false ) return;
+
+		handleKeyDown( event );
+
+	}
+
+	function onTouchStart( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		event.preventDefault();
+
+		switch ( event.touches.length ) {
+
+			case 1:
+
+				switch ( scope.touches.ONE ) {
+
+					case THREE.TOUCH.ROTATE:
+
+						if ( scope.enableRotate === false ) return;
+
+						handleTouchStartRotate( event );
+
+						state = STATE.TOUCH_ROTATE;
+
+						break;
+
+					case THREE.TOUCH.PAN:
+
+						if ( scope.enablePan === false ) return;
+
+						handleTouchStartPan( event );
+
+						state = STATE.TOUCH_PAN;
+
+						break;
+
+					default:
+
+						state = STATE.NONE;
+
+				}
+
+				break;
+
+			case 2:
+
+				switch ( scope.touches.TWO ) {
+
+					case THREE.TOUCH.DOLLY_PAN:
+
+						if ( scope.enableZoom === false && scope.enablePan === false ) return;
+
+						handleTouchStartDollyPan( event );
+
+						state = STATE.TOUCH_DOLLY_PAN;
+
+						break;
+
+					case THREE.TOUCH.DOLLY_ROTATE:
+
+						if ( scope.enableZoom === false && scope.enableRotate === false ) return;
+
+						handleTouchStartDollyRotate( event );
+
+						state = STATE.TOUCH_DOLLY_ROTATE;
+
+						break;
+
+					default:
+
+						state = STATE.NONE;
+
+				}
+
+				break;
+
+			default:
+
+				state = STATE.NONE;
+
+		}
+
+		if ( state !== STATE.NONE ) {
+
+			scope.dispatchEvent( startEvent );
+
+		}
+
+	}
+
+	function onTouchMove( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		switch ( state ) {
+
+			case STATE.TOUCH_ROTATE:
+
+				if ( scope.enableRotate === false ) return;
+
+				handleTouchMoveRotate( event );
+
+				scope.update();
+
+				break;
+
+			case STATE.TOUCH_PAN:
+
+				if ( scope.enablePan === false ) return;
+
+				handleTouchMovePan( event );
+
+				scope.update();
+
+				break;
+
+			case STATE.TOUCH_DOLLY_PAN:
+
+				if ( scope.enableZoom === false && scope.enablePan === false ) return;
+
+				handleTouchMoveDollyPan( event );
+
+				scope.update();
+
+				break;
+
+			case STATE.TOUCH_DOLLY_ROTATE:
+
+				if ( scope.enableZoom === false && scope.enableRotate === false ) return;
+
+				handleTouchMoveDollyRotate( event );
+
+				scope.update();
+
+				break;
+
+			default:
+
+				state = STATE.NONE;
+
+		}
+
+	}
+
+	function onTouchEnd( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		handleTouchEnd( event );
+
+		scope.dispatchEvent( endEvent );
+
+		state = STATE.NONE;
+
+	}
+
+	function onContextMenu( event ) {
+
+		if ( scope.enabled === false ) return;
+
+		event.preventDefault();
+
+	}
+
+	//
+
+	scope.domElement.addEventListener( 'contextmenu', onContextMenu, false );
+
+	scope.domElement.addEventListener( 'mousedown', onMouseDown, false );
+	scope.domElement.addEventListener( 'wheel', onMouseWheel, false );
+
+	scope.domElement.addEventListener( 'touchstart', onTouchStart, false );
+	scope.domElement.addEventListener( 'touchend', onTouchEnd, false );
+	scope.domElement.addEventListener( 'touchmove', onTouchMove, false );
+
+	scope.domElement.addEventListener( 'keydown', onKeyDown, false );
+
+	// make sure element can receive keys.
+
+	if ( scope.domElement.tabIndex === - 1 ) {
+
+		scope.domElement.tabIndex = 0;
+
+	}
+
+	// force an update at start
+
+	this.update();
+
+};
+
+THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+THREE.OrbitControls.prototype.constructor = THREE.OrbitControls;
+
+
+// This set of controls performs orbiting, dollying (zooming), and panning.
+// Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
+// This is very similar to OrbitControls, another set of touch behavior
+//
+//    Orbit - right mouse, or left mouse + ctrl/meta/shiftKey / touch: two-finger rotate
+//    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
+//    Pan - left mouse, or arrow keys / touch: one-finger move
+
+THREE.MapControls = function ( object, domElement ) {
+
+	THREE.OrbitControls.call( this, object, domElement );
+
+	this.mouseButtons.LEFT = THREE.MOUSE.PAN;
+	this.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
+
+	this.touches.ONE = THREE.TOUCH.PAN;
+	this.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
+
+};
+
+THREE.MapControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+THREE.MapControls.prototype.constructor = THREE.MapControls;
+/* three-orbitcontrols addendum */ module.exports = exports.default = THREE.OrbitControls;
 
 
 /***/ }),
@@ -79043,45 +80621,140 @@ if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
 /*!*************************!*\
   !*** ./solarsystem.jsx ***!
   \*************************/
-/*! no exports provided */
+/*! exports provided: scene, camera, renderer, Universe, controls */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scene", function() { return scene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "camera", function() { return camera; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderer", function() { return renderer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Universe", function() { return Universe; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "controls", function() { return controls; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-// import Game from './components/game';
+/* harmony import */ var _components_clock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/clock */ "./components/clock.js");
+/* harmony import */ var _components_starfield__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/starfield */ "./components/starfield.jsx");
+/* harmony import */ var _components_solar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/solar */ "./components/solar.jsx");
 
 
 
+
+var OrbitControls = __webpack_require__(/*! three-orbitcontrols */ "./node_modules/three-orbitcontrols/OrbitControls.js");
+
+
+
+
+var scene = new three__WEBPACK_IMPORTED_MODULE_2__["Scene"]();
+var camera = new three__WEBPACK_IMPORTED_MODULE_2__["PerspectiveCamera"](45, window.innerWidth / window.innerHeight, 1, 2000);
+var renderer = new three__WEBPACK_IMPORTED_MODULE_2__["WebGLRenderer"]();
+var Universe = new three__WEBPACK_IMPORTED_MODULE_2__["Object3D"]();
+var controls = new OrbitControls(camera, renderer.domElement);
+scene.add(Universe);
+
+function animate() {
+  requestAnimationFrame(animate); // required if controls.enableDamping or controls.autoRotate are set to true
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('root');
-  var scene = new three__WEBPACK_IMPORTED_MODULE_2__["Scene"]();
-  var camera = new three__WEBPACK_IMPORTED_MODULE_2__["PerspectiveCamera"](75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  var renderer = new three__WEBPACK_IMPORTED_MODULE_2__["WebGLRenderer"]();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-  var geometry = new three__WEBPACK_IMPORTED_MODULE_2__["BoxGeometry"]();
-  var material = new three__WEBPACK_IMPORTED_MODULE_2__["MeshBasicMaterial"]({
-    color: 0x00ff00
-  });
-  var cube = new three__WEBPACK_IMPORTED_MODULE_2__["Mesh"](geometry, material);
-  scene.add(cube);
-  camera.position.z = 5;
 
-  var animate = function animate() {
-    requestAnimationFrame(animate); // cube.rotation.x += 0.01;
+  function Root() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    camera.position.z = 400;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      id: "overlay"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_starfield__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_solar__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+  }
 
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }; // animate();
-
-
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(animate(), root);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Root, null), root);
 });
+
+/***/ }),
+
+/***/ "./utils/orbit.js":
+/*!************************!*\
+  !*** ./utils/orbit.js ***!
+  \************************/
+/*! exports provided: Orbit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Orbit", function() { return Orbit; });
+var Orbit = {
+  Sun: {
+    mass: 332946.00,
+    max_dis: null,
+    min_dis: null,
+    inclination: null
+  },
+  Mercury: {
+    mass: 0.055274,
+    max_dis: 43.3,
+    min_dis: 28.6,
+    inclination: 7.0
+  },
+  Venus: {
+    mass: 332946.00,
+    max_dis: 67.6,
+    min_dis: 66.7,
+    inclination: 3.4
+  },
+  Earth: {
+    mass: 332946.00,
+    max_dis: 94.4,
+    min_dis: 91.3,
+    inclination: 0
+  },
+  Mars: {
+    mass: 332946.00,
+    max_dis: 154.7,
+    min_dis: 128.3,
+    inclination: 1.9
+  },
+  Jupiter: {
+    mass: 332946.00,
+    max_dis: 506.7,
+    min_dis: 459.9,
+    inclination: 1.3
+  },
+  Saturn: {
+    mass: 332946.00,
+    max_dis: 936,
+    min_dis: 837,
+    inclination: 2.5
+  },
+  Uranus: {
+    mass: 332946.00,
+    max_dis: 1867,
+    min_dis: 1699,
+    inclination: 0.8
+  },
+  Neptune: {
+    mass: 332946.00,
+    max_dis: 2817,
+    min_dis: 2770,
+    inclination: 1.8
+  },
+  Pluto: {
+    mass: 332946.00,
+    max_dis: 4600,
+    min_dis: 2760,
+    inclination: 17.2
+  }
+};
 
 /***/ })
 
