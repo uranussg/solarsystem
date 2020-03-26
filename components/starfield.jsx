@@ -15,7 +15,7 @@ export default class StarField extends Component {
     
                 // Make a sphere (exactly the same as before). 
                 const color = colors[Math.floor(Math.random()*3)]
-                const geometry   = new THREE.SphereGeometry(1.2, 32, 32)
+                const geometry   = new THREE.SphereGeometry(1.2, 4, 4)
                 const material = new THREE.MeshBasicMaterial( {color: color} );
                 const sphere = new THREE.Mesh(geometry, material)
                 // var light = new THREE.PointLight( 0xff0000, 5, 100 )

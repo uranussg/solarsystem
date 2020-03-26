@@ -197,6 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var _solarsystem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../solarsystem */ "./solarsystem.jsx");
 /* harmony import */ var _utils_orbit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/orbit */ "./utils/orbit.js");
+/* harmony import */ var _utils_inital_pos__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/inital_pos */ "./utils/inital_pos.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -224,6 +225,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var solar = /*#__PURE__*/function (_Component) {
   _inherits(solar, _Component);
 
@@ -235,6 +238,7 @@ var solar = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, solar);
 
     _this = _super.call(this);
+    _this.camera = _solarsystem__WEBPACK_IMPORTED_MODULE_2__["camera"];
 
     _this.addSolar();
 
@@ -248,8 +252,9 @@ var solar = /*#__PURE__*/function (_Component) {
       var solarSystem = new three__WEBPACK_IMPORTED_MODULE_1__["Object3D"]();
       _solarsystem__WEBPACK_IMPORTED_MODULE_2__["Universe"].add(solarSystem); // Make a sphere (exactly the same as before). 
 
-      var sungeometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.42, 16, 16);
-      var texture = new three__WEBPACK_IMPORTED_MODULE_1__["TextureLoader"]().load("https://solartextures.b-cdn.net/8k_sun.jpg");
+      var sungeometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.42, 16, 16); // const texture = new THREE.TextureLoader().load(`https://solartextures.b-cdn.net/8k_sun.jpg`)
+
+      var texture = new three__WEBPACK_IMPORTED_MODULE_1__["TextureLoader"]().load("asset/sun.jpg");
       var sunmaterial = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({
         map: texture
       });
@@ -289,7 +294,7 @@ var solar = /*#__PURE__*/function (_Component) {
         blending: three__WEBPACK_IMPORTED_MODULE_1__["AdditiveBlending"],
         transparent: true
       });
-      var glow = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.5, 16, 16);
+      var glow = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](0.5, 32, 32);
       var corona = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](glow, customMaterial);
       _solarsystem__WEBPACK_IMPORTED_MODULE_2__["scene"].add(corona);
       var light = new three__WEBPACK_IMPORTED_MODULE_1__["PointLight"](0xFFFF00, 100, 0);
@@ -297,6 +302,7 @@ var solar = /*#__PURE__*/function (_Component) {
       solarSystem.add(light);
 
       for (var i = 1; i < 10; i += 1) {
+        var planetName = Object.keys(_utils_orbit__WEBPACK_IMPORTED_MODULE_3__["Orbit"])[i];
         var planet = Object.values(_utils_orbit__WEBPACK_IMPORTED_MODULE_3__["Orbit"])[i];
         var xRadius = (planet.max_dis + planet.min_dis) / 2;
         var yRadius = Math.sqrt(planet.min_dis * planet.max_dis);
@@ -314,7 +320,9 @@ var solar = /*#__PURE__*/function (_Component) {
         var colors2 = [];
         var point = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"]();
         var color = new three__WEBPACK_IMPORTED_MODULE_1__["Color"]();
-        var startp = Math.random();
+        var initialp = Math.sqrt(Math.pow(_utils_inital_pos__WEBPACK_IMPORTED_MODULE_4__["InitialPos"][planetName].ra, 2) + Math.pow(_utils_inital_pos__WEBPACK_IMPORTED_MODULE_4__["InitialPos"][planetName].dec, 2)) * Math.PI / 180;
+        var devp = (Date.now() - Date.parse('25 Mar 2020')) / (1000 * 60 * 60 * 24 * planet.period);
+        var startp = initialp + devp;
 
         for (var j = 0; j < numOfPoints; j++) {
           var t = j / numOfPoints + startp - Math.floor(j / numOfPoints + startp);
@@ -329,16 +337,77 @@ var solar = /*#__PURE__*/function (_Component) {
         var material = new three__WEBPACK_IMPORTED_MODULE_1__["LineBasicMaterial"]({
           color: 0xffffff,
           vertexColors: true,
-          linewidth: 2
+          linewidth: 1,
+          transparent: true
         }); // Create the final object to add to the Universe
 
-        var ellipse = new three__WEBPACK_IMPORTED_MODULE_1__["Line"](geometry, material);
-        ellipse.rotation.set(Math.PI / 2, inclination, 0);
+        var ellipse = new three__WEBPACK_IMPORTED_MODULE_1__["Line"](geometry, material); // const circle = new Object3D()
+        // ellipse.add(circle)
+        // circle.position.set(vertices[0])
+        // const circlegeometry   = new THREE.SphereGeometry(0.5, 16, 16)
+        // var circlematerial= new THREE.ShaderMaterial( 
+        //     {
+        //         uniforms:       
+        //         { 
+        //             "s":   { type: "f", value: -3.0},
+        //             "b":   { type: "f", value: 2.0},
+        //             "p":   { type: "f", value: 4.0 },
+        //             glowColor: { type: "c", value: color }
+        //         },
+        //         vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
+        //         fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+        //         side: THREE.FrontSide,
+        //         blending: THREE.AdditiveBlending,
+        //         transparent: true
+        //     }   );
+        // const circlematerial = new THREE.MeshBasicMaterial( { color: 0xffffff  });
+
+        var circlegeometry = new three__WEBPACK_IMPORTED_MODULE_1__["BufferGeometry"]();
+        circlegeometry.setAttribute('position', new three__WEBPACK_IMPORTED_MODULE_1__["Float32BufferAttribute"](vertices.slice(0, 3), 3));
+        var sprite = new three__WEBPACK_IMPORTED_MODULE_1__["TextureLoader"]().load("asset/circle.png");
+        var circlematerial = new three__WEBPACK_IMPORTED_MODULE_1__["PointsMaterial"]({
+          sizeAttenuation: false,
+          map: sprite,
+          size: 16,
+          alphaTest: 0,
+          transparent: true,
+          color: color
+        });
+        var newsph = new three__WEBPACK_IMPORTED_MODULE_1__["Points"](circlegeometry, circlematerial); // const newsph = new THREE.Mesh(circlegeometry, circlematerial)
+        // newsph.position.set(vertices[0], vertices[1], vertices[2])
+        // circle.add(newsph)
+
+        ellipse.add(newsph);
+        ellipse.rotation.set(-Math.PI / 3, inclination, 0); // newsph.rotation.set(- Math.PI /3, inclination, 0)
+
         solarSystem.add(ellipse);
+        this.addCircle(newsph, planetName, this.camera);
       } //finally push it to the stars array 
       // stars.push(sphere); 
       // renderer.render( scene, camera );
 
+    }
+  }, {
+    key: "addCircle",
+    value: function addCircle(newsph, planetName, camera) {
+      var p = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"](); // newsph.updateMatirx()
+
+      newsph.updateMatrixWorld();
+      p = p.setFromMatrixPosition(newsph.matrixWorld);
+      var widthHalf = 0.5 * window.innerWidth;
+      var heightHalf = 0.5 * window.innerHeight;
+      camera.updateMatrixWorld();
+      camera.updateProjectionMatrix;
+      var vector = p.project(camera);
+      vector.x = vector.x * widthHalf + widthHalf;
+      vector.y = -(vector.y * heightHalf) + heightHalf;
+      var circles = document.getElementById('circles');
+      var circle = document.getElementById(planetName) ? document.getElementById(planetName) : document.createElement('div', {
+        is: "".concat(planetName)
+      });
+      circles.appendChild(circle);
+      circle.style.left = vector.x;
+      circle.style.top = vector.y;
     }
   }, {
     key: "render",
@@ -347,7 +416,7 @@ var solar = /*#__PURE__*/function (_Component) {
       // requestAnimationFrame( renderer );
       //render the scene
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sun"
+        className: "solar"
       });
     }
   }]);
@@ -427,7 +496,7 @@ var StarField = /*#__PURE__*/function (_Component) {
       for (var i = 0; i < 1500; i += 1) {
         // Make a sphere (exactly the same as before). 
         var color = colors[Math.floor(Math.random() * 3)];
-        var geometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](1.2, 32, 32);
+        var geometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](1.2, 4, 4);
         var material = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({
           color: color
         });
@@ -80653,33 +80722,118 @@ var camera = new three__WEBPACK_IMPORTED_MODULE_2__["PerspectiveCamera"](45, win
 var renderer = new three__WEBPACK_IMPORTED_MODULE_2__["WebGLRenderer"]();
 var Universe = new three__WEBPACK_IMPORTED_MODULE_2__["Object3D"]();
 var controls = new OrbitControls(camera, renderer.domElement);
+var raycaster = new three__WEBPACK_IMPORTED_MODULE_2__["Raycaster"]();
+var hovermouse = new three__WEBPACK_IMPORTED_MODULE_2__["Vector2"]();
 scene.add(Universe);
 
-function animate() {
-  requestAnimationFrame(animate); // required if controls.enableDamping or controls.autoRotate are set to true
+function onMouseMove(event) {
+  hovermouse.x = event.clientX / window.innerWidth * 2 - 1;
+  hovermouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
 
+function onHover() {
+  raycaster.setFromCamera(hovermouse, camera);
+  var intersects = raycaster.intersectObjects(scene.children);
+
+  for (var i = 0; i < intersects.length; i++) {
+    intersects[i].object.material.color.set(0xff0000);
+  }
+}
+
+var raycaster1 = new three__WEBPACK_IMPORTED_MODULE_2__["Raycaster"]();
+var clickmouse = new three__WEBPACK_IMPORTED_MODULE_2__["Vector2"]();
+
+function onClickMouse() {
+  clickmouse.x = event.clientX / window.innerWidth * 2 - 1;
+  clickmouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+
+function onClick() {
+  raycaster1.setFromCamera(clickmouse, camera);
+  var intersects = raycaster1.intersectObjects(scene.children);
+
+  for (var i = 0; i < intersects.length; i++) {}
+}
+
+function animate() {
+  requestAnimationFrame(animate);
   controls.update();
+  onHover();
+  onClick();
   renderer.render(scene, camera);
 }
 
-animate();
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('root');
+  window.addEventListener('mousemove', onMouseMove, false);
+  animate();
 
   function Root() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     camera.position.z = 400;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      id: "overlay"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_starfield__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_solar__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_solar__WEBPACK_IMPORTED_MODULE_5__["default"], null));
   }
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Root, null), root);
 });
+
+/***/ }),
+
+/***/ "./utils/inital_pos.js":
+/*!*****************************!*\
+  !*** ./utils/inital_pos.js ***!
+  \*****************************/
+/*! exports provided: InitialPos */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InitialPos", function() { return InitialPos; });
+var InitialPos = {
+  Sun: {
+    mass: 332946.00,
+    max_dis: null,
+    min_dis: null,
+    inclination: null
+  },
+  Mercury: {
+    ra: 249.86906,
+    dec: -24.97531
+  },
+  Venus: {
+    ra: 142.78203,
+    dec: 17.85271
+  },
+  Earth: {
+    ra: 184.31403,
+    dec: -1.90066
+  },
+  Mars: {
+    ra: 255.82226,
+    dec: -23.67268
+  },
+  Jupiter: {
+    ra: 283.86000,
+    dec: -22.88384
+  },
+  Saturn: {
+    ra: 296.72829,
+    dec: -21.22297
+  },
+  Uranus: {
+    ra: 33.80124,
+    dec: 13.05465
+  },
+  Neptune: {
+    ra: 349.58034,
+    dec: -5.62737
+  },
+  Pluto: {
+    ra: 294.85933,
+    dec: -22.28355
+  }
+};
 
 /***/ }),
 
@@ -80701,55 +80855,55 @@ var Orbit = {
     inclination: null
   },
   Mercury: {
-    mass: 0.055274,
+    period: 88,
     max_dis: 43.3,
     min_dis: 28.6,
     inclination: 7.0
   },
   Venus: {
-    mass: 332946.00,
+    period: 225,
     max_dis: 67.6,
     min_dis: 66.7,
     inclination: 3.4
   },
   Earth: {
-    mass: 332946.00,
+    period: 365,
     max_dis: 94.4,
     min_dis: 91.3,
     inclination: 0
   },
   Mars: {
-    mass: 332946.00,
+    period: 365 * 1.9,
     max_dis: 154.7,
     min_dis: 128.3,
     inclination: 1.9
   },
   Jupiter: {
-    mass: 332946.00,
+    period: 365 * 11.9,
     max_dis: 506.7,
     min_dis: 459.9,
     inclination: 1.3
   },
   Saturn: {
-    mass: 332946.00,
+    period: 365 * 29.5,
     max_dis: 936,
     min_dis: 837,
     inclination: 2.5
   },
   Uranus: {
-    mass: 332946.00,
+    period: 365 * 84,
     max_dis: 1867,
     min_dis: 1699,
     inclination: 0.8
   },
   Neptune: {
-    mass: 332946.00,
+    period: 365 * 165,
     max_dis: 2817,
     min_dis: 2770,
     inclination: 1.8
   },
   Pluto: {
-    mass: 332946.00,
+    period: 365 * 248,
     max_dis: 4600,
     min_dis: 2760,
     inclination: 17.2
