@@ -14,57 +14,67 @@
 </head>
 <body>
     <script src="js/three.js"></script>
-    <script id="vertexShaderAtmosphere" type="x-shader/x-vertex">
-        varying vec3 vNormal;
-        void main() 
-        {
-            vNormal = normalize( normalMatrix * normal );
-            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        }
-        </script>
-        
-        <!-- fragment shader a.k.a. pixel shader -->
-        <script id="fragmentShaderAtmosphere" type="x-shader/x-vertex"> 
-        uniform vec3 glowColor;
-        uniform float c;
-        uniform float p;
-        varying vec3 vNormal;
-        void main() 
-        {
-            float intensity = pow( c - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), p ); 
-            gl_FragColor = vec4( glowColor, intensity );
-        }
-        </script>
     
-      <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-      <script id="vertexShader" type="x-shader/x-vertex">
-        varying vec3 vNormal;
-        varying vec3 vPositionNormal;
-        void main() 
-        {
-          vNormal = normalize( normalMatrix * normal ); // 转换到视图空间
-          vPositionNormal = normalize(( modelViewMatrix * vec4(position, 1.0) ).xyz);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        }
-      </script>
-      <!-- fragment shader a.k.a. pixel shader -->
-      <script id="fragmentShader" type="x-shader/x-vertex"> 
-        uniform vec3 glowColor;
-        uniform float b;
-        uniform float p;
-        uniform float s;
-        varying vec3 vNormal;
-        varying vec3 vPositionNormal;
-        void main() 
-        {
-          float a = pow( b + s * abs(dot(vNormal, vPositionNormal)), p );
-          gl_FragColor = vec4( glowColor, a );
-        }
-      </script>
     
-      <div id='circles'></div>
     <div id='root'>
-        react breaks
+      react breaks
+    </div>
+
+    
+    <div id='detail' style="display: none; height: 676px;">
+      <div class='container content'>
+
+       <h1 id='title'></h1>
+       <img id='imgurl' src="" alt="">
+       <p id='description'>dsfasgdfaert</p>
+       <a id='readmore' href=""></a>
+        <table id="quickfacts">
+          <tr class="data">
+            <td class="halfdata left">
+              <span class="dataspan">
+                <div class="color"></div>
+                <div class="info"></div>
+              </span>
+            </td>
+            <td class="halfdata right">
+              <span class="dataspan">
+                <div class="color"></div>
+                <div class="info"></div>
+              </span>
+            </td>
+          </tr>
+          <tr class='label'>
+            <td class="halflabel left">
+              <span></span>
+            </td>
+            <td class="halflabel right">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="data">
+            <td class="halfdata left">
+              <span class="dataspan">
+                <div class="infolike"></div>
+              </span>
+            </td>
+            <td class="halfdata right">
+              <span class="dataspan">
+                <div class="color"></div>
+                <div class="icon"></div>
+              </span>
+            </td>
+          </tr>
+          <tr class="label">
+            <td class="halflabel left">
+              <span></span>
+            </td>
+            <td class="halflabel right">
+              <span></span>
+            </td>
+          </tr>
+        </table>
+        <div class="explaination"></div>
+      </div>
     </div>
 
 </body>

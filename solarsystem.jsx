@@ -5,54 +5,53 @@ const OrbitControls = require('three-orbitcontrols')
 import Clock from './components/clock'
 import StarFiled from './components/starfield'
 import Solar from './components/solar'
+import DetailPanel from './components/detailpanel'
+import {Detail }from './utils/detail'
 
 
 
 export let scene = new THREE.Scene();
-export let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 2000 );
+export let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.01, 2000 );
 export let renderer = new THREE.WebGLRenderer();
 export let Universe  = new THREE.Object3D()
 export let controls = new OrbitControls( camera, renderer.domElement );
 
 let raycaster = new THREE.Raycaster();
-let hovermouse = new THREE.Vector2();
+let mouse = new THREE.Vector2();
 
 
 scene.add(Universe)
+const solar = new Solar(camera, Universe,scene)
 
-function onMouseMove( event ) {
-	hovermouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	hovermouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-}
 
 function onHover() {
+  
+  mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
 
-	raycaster.setFromCamera( hovermouse, camera );
-	var intersects = raycaster.intersectObjects( scene.children );
+	raycaster.setFromCamera( mouse, camera );
+	var intersects = raycaster.intersectObjects( solar.circles );
 
 	for ( var i = 0; i < intersects.length; i++ ) {
 
-		intersects[ i ].object.material.color.set( 0xff0000 );
+		// intersects[ i ].object.material.color.set( 0xff0000 );
 
 	}
 
 }
 
-let raycaster1 = new THREE.Raycaster();
-let clickmouse = new THREE.Vector2();
-
-function onClickMouse() {
-  clickmouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	clickmouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-}
-
 function onClick() {
 
-	raycaster1.setFromCamera( clickmouse, camera );
-	var intersects = raycaster1.intersectObjects( scene.children );
+  mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
 
-	for ( var i = 0; i < intersects.length; i++ ) {
+	raycaster.setFromCamera( mouse, camera );
+	var intersects = raycaster.intersectObjects( solar.circles );
+
+	if ( intersects.length ) {
+    const intersect = intersects[0]
+    // const idx = solar.circles.indexOf(intersect.Object)
+    const planet = intersect.object.children[0].userData.planet
+    debugger
+    const panel = new DetailPanel(planet)
 
 	
 
@@ -64,8 +63,8 @@ function animate() {
 
 	requestAnimationFrame( animate );
   controls.update();
-  onHover()
-  onClick()
+  // onHover()
+  // onClick()
 
 	renderer.render( scene, camera );
 
@@ -81,7 +80,8 @@ function animate() {
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('root')
   
-  window.addEventListener( 'mousemove', onMouseMove, false );
+  window.addEventListener( 'mousemove', onHover, false );
+  window.addEventListener( 'mousedown', onClick, false );
   animate()
     
     
@@ -93,13 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <div>
               
         <Clock />
-        {/* <StarFiled width={window.innerWidth} height = {window.innerHeight}/> */}
-        <Solar />
+        <StarFiled width={window.innerWidth} height = {window.innerHeight}/>
+        {/* <Solar /> */}
         
       </div>
        );
     }
-
 
   ReactDOM.render(
 	  <Root/>,

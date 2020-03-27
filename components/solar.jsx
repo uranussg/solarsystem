@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
 import * as THREE from 'three'
-import { Universe, camera, renderer, scene} from '../solarsystem'
 import  { Orbit } from '../utils/orbit'
 import { InitialPos } from '../utils/inital_pos'
-import { Object3D, CircleBufferGeometry } from 'three'
+import { Object3D } from 'three'
 
 
-export default class solar extends Component {
-    constructor(){
-        super()
+export default class solar {
+    constructor(camera, universe, scene){
         this.camera = camera
+        this.universe = universe
+        this.scene = scene
+        this.circles = []
         this.addSolar()
     }
         addSolar(){
             // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
             
                 const solarSystem = new THREE.Object3D()
-                Universe.add(solarSystem)
+                this.universe.add(solarSystem)
     
                 // Make a sphere (exactly the same as before). 
 
-                const sungeometry   = new THREE.SphereGeometry(0.42, 16, 16)
+                const sungeometry   = new THREE.SphereGeometry(0.1, 32, 32)
                 // const texture = new THREE.TextureLoader().load(`https://solartextures.b-cdn.net/8k_sun.jpg`)
-                const texture = new THREE.TextureLoader().load(`asset/sun.jpg`)
+                const texture = new THREE.TextureLoader().load(`asset/sun_texture.jpg`)
                 const sunmaterial = new THREE.MeshBasicMaterial( { map: texture });
                 const sun = new THREE.Mesh(sungeometry, sunmaterial)
 
@@ -45,25 +45,35 @@ export default class solar extends Component {
     
                 //add the sun to the Universe
                 solarSystem.add( sun);
+                var suncirclegeometry = new THREE.BufferGeometry();
+                suncirclegeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( [0,0,0], 3 ) );
+                const sunsprite = new THREE.TextureLoader().load( `asset/circle.png` )
 
-                var customMaterial= new THREE.ShaderMaterial( 
-                    {
-                        uniforms:       
-                        { 
-                            "c":   { type: "f", value: 0.5 },
-                            "p":   { type: "f", value: 2.0 },
-                            glowColor: { type: "c", value: new THREE.Color(0x00ffff) }
-                        },
-                        vertexShader:   document.getElementById( 'vertexShaderAtmosphere'   ).textContent,
-                        fragmentShader: document.getElementById( 'fragmentShaderAtmosphere' ).textContent,
-                        side: THREE.FrontSide,
-                        blending: THREE.AdditiveBlending,
-                        transparent: true
-                    }   );
+
+                var suncirclematerial = new THREE.PointsMaterial( { sizeAttenuation: false, map: sunsprite, size: 16, alphaTest: 0, transparent: true, color: 0xFFFF00} );
+
+                const suncricle = new THREE.Points( suncirclegeometry, suncirclematerial );
+                suncricle.userData.planet = 'Sun'
+                solarSystem.add(suncricle)
+
+                // var customMaterial= new THREE.ShaderMaterial( 
+                //     {
+                //         uniforms:       
+                //         { 
+                //             "c":   { type: "f", value: 0.5 },
+                //             "p":   { type: "f", value: 2.0 },
+                //             glowColor: { type: "c", value: new THREE.Color(0x00ffff) }
+                //         },
+                //         vertexShader:   document.getElementById( 'vertexShaderAtmosphere'   ).textContent,
+                //         fragmentShader: document.getElementById( 'fragmentShaderAtmosphere' ).textContent,
+                //         side: THREE.FrontSide,
+                //         blending: THREE.AdditiveBlending,
+                //         transparent: true
+                //     }   );
                 
-                  var glow = new THREE.SphereGeometry(0.5, 32, 32)
-                  var corona = new THREE.Mesh( glow, customMaterial )
-                  scene.add( corona )
+                //   var glow = new THREE.SphereGeometry(0.12, 32, 32)
+                //   var corona = new THREE.Mesh( glow, customMaterial )
+                //   this.scene.add( corona )
 
                 const light = new THREE.PointLight(0xFFFF00,100 ,0);
                 light.position.set(0, 0, 0)
@@ -145,27 +155,38 @@ export default class solar extends Component {
                 //     }   );
                 // const circlematerial = new THREE.MeshBasicMaterial( { color: 0xffffff  });
 
+                const containergeo = new THREE.SphereBufferGeometry(30,4,4)
+                const containermat = new THREE.MeshBasicMaterial({opacity:0, alphaTest: 0.5, transparent: true})
+
+                const planetInfo = new THREE.Mesh(containergeo, containermat)
+
+                planetInfo.position.set(vertices[0], vertices[1], vertices[2])
+                
+
+                    var circlegeometry = new THREE.BufferGeometry();
+                    circlegeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( [0,0,0], 3 ) );
+                    const sprite = new THREE.TextureLoader().load( `asset/circle.png` )
 
 
-var circlegeometry = new THREE.BufferGeometry();
-circlegeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices.slice(0, 3), 3 ) );
-const sprite = new THREE.TextureLoader().load( `asset/circle.png` )
+                    var circlematerial = new THREE.PointsMaterial( { sizeAttenuation: false, map: sprite, size: 16, alphaTest: 0, transparent: true, color: color} );
 
-
-var circlematerial = new THREE.PointsMaterial( { sizeAttenuation: false, map: sprite, size: 16, alphaTest: 0, transparent: true, color: color} );
-
-const newsph = new THREE.Points( circlegeometry, circlematerial );
+                    const newsph = new THREE.Points( circlegeometry, circlematerial );
+                    newsph.userData.planet = planetName
 
 
                 // const newsph = new THREE.Mesh(circlegeometry, circlematerial)
                 // newsph.position.set(vertices[0], vertices[1], vertices[2])
                 // circle.add(newsph)
-                ellipse.add(newsph)
+                planetInfo.add(newsph)
+
+
+                ellipse.add(planetInfo)
+                this.circles.push(planetInfo)
                 ellipse.rotation.set(- Math.PI /3, inclination, 0)
                 // newsph.rotation.set(- Math.PI /3, inclination, 0)
                 solarSystem.add(ellipse)
                 
-                this.addCircle(newsph, planetName, this.camera)
+                // this.addCircle(newsph, planetName, this.camera)
                 
             }
                 //finally push it to the stars array 
@@ -174,41 +195,41 @@ const newsph = new THREE.Points( circlegeometry, circlematerial );
             
         }
 
-        addCircle(newsph, planetName, camera) {
-            let p = new THREE.Vector3()
+        // addCircle(newsph, planetName, camera) {
+        //     let p = new THREE.Vector3()
      
-            // newsph.updateMatirx()
-            newsph.updateMatrixWorld()
-             p = p.setFromMatrixPosition(newsph.matrixWorld)
-            const widthHalf = 0.5*window.innerWidth;
-            const heightHalf = 0.5*window.innerHeight;
+        //     // newsph.updateMatirx()
+        //     newsph.updateMatrixWorld()
+        //      p = p.setFromMatrixPosition(newsph.matrixWorld)
+        //     const widthHalf = 0.5*window.innerWidth;
+        //     const heightHalf = 0.5*window.innerHeight;
  
-        camera.updateMatrixWorld()
-        camera.updateProjectionMatrix
-            let vector = p.project(camera);
+        // camera.updateMatrixWorld()
+        // camera.updateProjectionMatrix
+        //     let vector = p.project(camera);
  
-            vector.x = ( vector.x * widthHalf ) + widthHalf;
-            vector.y = - ( vector.y * heightHalf ) + heightHalf;
+        //     vector.x = ( vector.x * widthHalf ) + widthHalf;
+        //     vector.y = - ( vector.y * heightHalf ) + heightHalf;
         
-            const circles = document.getElementById('circles')
+        //     const circles = document.getElementById('circles')
      
-            const circle = document.getElementById(planetName) ? document.getElementById(planetName) : document.createElement('div', {is: `${planetName}`})
-            circles.appendChild(circle)
-            circle.style.left = vector.x ;
-            circle.style.top = vector.y ;
+        //     const circle = document.getElementById(planetName) ? document.getElementById(planetName) : document.createElement('div', {is: `${planetName}`})
+        //     circles.appendChild(circle)
+        //     circle.style.left = vector.x ;
+        //     circle.style.top = vector.y ;
 
-        }
+        // }
 
     
-        render() {
-            //get the frame
-            // requestAnimationFrame( renderer );
+        // render() {
+        //     //get the frame
+        //     // requestAnimationFrame( renderer );
 
-            //render the scene
-            return(
-                <div className='solar'></div>
-            )
+        //     //render the scene
+        //     return(
+        //         <div className='solar'></div>
+        //     )
 
 
-        }
+        // }
 }
