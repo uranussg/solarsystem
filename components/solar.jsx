@@ -1,16 +1,17 @@
 import * as THREE from 'three'
 import  { Orbit } from '../utils/orbit'
 import { InitialPos } from '../utils/inital_pos'
-import { Object3D } from 'three'
+import updateTextPos from './addtext'
 
 
-export default class solar {
+export default class Solar {
     constructor(camera, universe, scene){
         this.camera = camera
         this.universe = universe
         this.scene = scene
         this.circles = []
         this.addSolar()
+
     }
         addSolar(){
             // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
@@ -45,12 +46,13 @@ export default class solar {
     
                 //add the sun to the Universe
                 solarSystem.add( sun);
+                this.sun = sun
                 var suncirclegeometry = new THREE.BufferGeometry();
                 suncirclegeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( [0,0,0], 3 ) );
                 const sunsprite = new THREE.TextureLoader().load( `asset/circle.png` )
 
 
-                var suncirclematerial = new THREE.PointsMaterial( { sizeAttenuation: false, map: sunsprite, size: 16, alphaTest: 0, transparent: true, color: 0xFFFF00} );
+                var suncirclematerial = new THREE.PointsMaterial( { sizeAttenuation: false, map: sunsprite, size: 16, alphaTest: 0, transparent: true, color: 0xA39D51} );
 
                 const suncricle = new THREE.Points( suncirclegeometry, suncirclematerial );
                 suncricle.userData.planet = 'Sun'
@@ -107,7 +109,7 @@ export default class solar {
                 const initialp =  Math.sqrt(InitialPos[planetName].ra ** 2 + InitialPos[planetName].dec ** 2) * Math.PI/ 180
                 const devp = (Date.now() - Date.parse('25 Mar 2020'))/ (1000* 60 * 60 * 24 * planet.period)
                 const startp = initialp + devp
-
+        
 				for (let j = 0; j < numOfPoints; j ++ ) {
 
 					var t = (j / ( numOfPoints ) + startp) - Math.floor(j / ( numOfPoints ) + startp);
@@ -116,7 +118,9 @@ export default class solar {
 					vertices.push( point.x, point.y, 0 );
 
 
-					color.setHSL( i/9 * 0.5, 0.3, Math.max( 0, 0.5 * j / numOfPoints  ) );
+                    color.setHSL( planet.h/360, 0.25,  0.4 * j / numOfPoints   );
+                    
+                    if(i === 9)color.setHSL( planet.h/360, 0,  0.4 * j / numOfPoints   );
 					colors2.push( color.r, color.g, color.b );
 				}
 
@@ -155,7 +159,7 @@ export default class solar {
                 //     }   );
                 // const circlematerial = new THREE.MeshBasicMaterial( { color: 0xffffff  });
 
-                const containergeo = new THREE.SphereBufferGeometry(30,4,4)
+                const containergeo = new THREE.SphereBufferGeometry(planet.min_dis/100,4,4)
                 const containermat = new THREE.MeshBasicMaterial({opacity:0, alphaTest: 0.5, transparent: true})
 
                 const planetInfo = new THREE.Mesh(containergeo, containermat)
@@ -177,11 +181,13 @@ export default class solar {
                 // const newsph = new THREE.Mesh(circlegeometry, circlematerial)
                 // newsph.position.set(vertices[0], vertices[1], vertices[2])
                 // circle.add(newsph)
-                planetInfo.add(newsph)
 
+                planetInfo.add(newsph)
+                // updateTextPos(planetInfo, this.camera)
 
                 ellipse.add(planetInfo)
                 this.circles.push(planetInfo)
+
                 ellipse.rotation.set(- Math.PI /3, inclination, 0)
                 // newsph.rotation.set(- Math.PI /3, inclination, 0)
                 solarSystem.add(ellipse)
@@ -195,30 +201,7 @@ export default class solar {
             
         }
 
-        // addCircle(newsph, planetName, camera) {
-        //     let p = new THREE.Vector3()
-     
-        //     // newsph.updateMatirx()
-        //     newsph.updateMatrixWorld()
-        //      p = p.setFromMatrixPosition(newsph.matrixWorld)
-        //     const widthHalf = 0.5*window.innerWidth;
-        //     const heightHalf = 0.5*window.innerHeight;
- 
-        // camera.updateMatrixWorld()
-        // camera.updateProjectionMatrix
-        //     let vector = p.project(camera);
- 
-        //     vector.x = ( vector.x * widthHalf ) + widthHalf;
-        //     vector.y = - ( vector.y * heightHalf ) + heightHalf;
-        
-        //     const circles = document.getElementById('circles')
-     
-        //     const circle = document.getElementById(planetName) ? document.getElementById(planetName) : document.createElement('div', {is: `${planetName}`})
-        //     circles.appendChild(circle)
-        //     circle.style.left = vector.x ;
-        //     circle.style.top = vector.y ;
-
-        // }
+       
 
     
         // render() {

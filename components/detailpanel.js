@@ -24,7 +24,7 @@ export default function DetailPanel(planet) {
     const children = quickfacts.children[0].children
         
     for (let i = 0; i< planetdetail['quickfacts'].length; i+=1) {
-        debugger
+        
 
         if (i % 2) {
             const target = planetdetail['quickfacts'][i]['label']

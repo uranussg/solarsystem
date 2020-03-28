@@ -86,6 +86,61 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./components/addtext.js":
+/*!*******************************!*\
+  !*** ./components/addtext.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return updateText; });
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+
+function updateText(obj, camera) {
+  var planetName = obj.children[0].userData.planet;
+  var p = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]();
+  obj.updateMatrixWorld(); //  p = obj.geometry.vertices[0].clone();
+  // p = obj.position.clone()
+  //  p.applyMartirx4(obj.matrixWorld)
+  // debugger
+
+  p.setFromMatrixPosition(obj.matrixWorld);
+  var widthHalf = 0.5 * window.innerWidth;
+  var heightHalf = 0.5 * window.innerHeight;
+  camera.updateMatrixWorld();
+  camera.updateProjectionMatrix(); // let vector = obj.uv
+
+  var vector = p.project(camera);
+  var x = vector.x * widthHalf + widthHalf;
+  var y = -(vector.y * heightHalf) + heightHalf;
+  var text;
+  var container = document.getElementById('text-container');
+
+  if (document.getElementById(planetName)) {
+    text = document.getElementById(planetName);
+  } else {
+    text = document.createElement('div');
+    text.setAttribute('id', planetName);
+    container.appendChild(text);
+    text.style.position = 'absolute';
+    text.innerHTML = planetName;
+    text.style.background = "transparent";
+  }
+
+  text.style.display = 'block';
+
+  if (Math.abs(vector.x) < 0.05 && Math.abs(vector.y) < 0.05) {
+    text.style.display = 'none';
+  }
+
+  text.style.left = x + 'px';
+  text.style.top = y + 'px'; // text.style.transform = "translate("+vector.x+"px,"+vector.y+"px)";
+}
+
+/***/ }),
+
 /***/ "./components/clock.js":
 /*!*****************************!*\
   !*** ./components/clock.js ***!
@@ -212,8 +267,6 @@ function DetailPanel(planet) {
   var children = quickfacts.children[0].children;
 
   for (var i = 0; i < planetdetail['quickfacts'].length; i += 1) {
-    debugger;
-
     if (i % 2) {
       var target = planetdetail['quickfacts'][i]['label'];
       children[i].firstElementChild.firstElementChild.innerText = target['left'];
@@ -244,10 +297,11 @@ function DetailPanel(planet) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return solar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Solar; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var _utils_orbit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/orbit */ "./utils/orbit.js");
 /* harmony import */ var _utils_inital_pos__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/inital_pos */ "./utils/inital_pos.js");
+/* harmony import */ var _addtext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./addtext */ "./components/addtext.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -259,9 +313,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var solar = /*#__PURE__*/function () {
-  function solar(camera, universe, scene) {
-    _classCallCheck(this, solar);
+var Solar = /*#__PURE__*/function () {
+  function Solar(camera, universe, scene) {
+    _classCallCheck(this, Solar);
 
     this.camera = camera;
     this.universe = universe;
@@ -270,7 +324,7 @@ var solar = /*#__PURE__*/function () {
     this.addSolar();
   }
 
-  _createClass(solar, [{
+  _createClass(Solar, [{
     key: "addSolar",
     value: function addSolar() {
       // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
@@ -298,6 +352,7 @@ var solar = /*#__PURE__*/function () {
       //add the sun to the Universe
 
       solarSystem.add(sun);
+      this.sun = sun;
       var suncirclegeometry = new three__WEBPACK_IMPORTED_MODULE_0__["BufferGeometry"]();
       suncirclegeometry.setAttribute('position', new three__WEBPACK_IMPORTED_MODULE_0__["Float32BufferAttribute"]([0, 0, 0], 3));
       var sunsprite = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load("asset/circle.png");
@@ -307,7 +362,7 @@ var solar = /*#__PURE__*/function () {
         size: 16,
         alphaTest: 0,
         transparent: true,
-        color: 0xFFFF00
+        color: 0xA39D51
       });
       var suncricle = new three__WEBPACK_IMPORTED_MODULE_0__["Points"](suncirclegeometry, suncirclematerial);
       suncricle.userData.planet = 'Sun';
@@ -360,7 +415,8 @@ var solar = /*#__PURE__*/function () {
           var t = j / numOfPoints + startp - Math.floor(j / numOfPoints + startp);
           curve.getPoint(t, point);
           vertices.push(point.x, point.y, 0);
-          color.setHSL(i / 9 * 0.5, 0.3, Math.max(0, 0.5 * j / numOfPoints));
+          color.setHSL(planet.h / 360, 0.25, 0.4 * j / numOfPoints);
+          if (i === 9) color.setHSL(planet.h / 360, 0, 0.4 * j / numOfPoints);
           colors2.push(color.r, color.g, color.b);
         }
 
@@ -394,7 +450,7 @@ var solar = /*#__PURE__*/function () {
         //     }   );
         // const circlematerial = new THREE.MeshBasicMaterial( { color: 0xffffff  });
 
-        var containergeo = new three__WEBPACK_IMPORTED_MODULE_0__["SphereBufferGeometry"](30, 4, 4);
+        var containergeo = new three__WEBPACK_IMPORTED_MODULE_0__["SphereBufferGeometry"](planet.min_dis / 100, 4, 4);
         var containermat = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
           opacity: 0,
           alphaTest: 0.5,
@@ -418,7 +474,8 @@ var solar = /*#__PURE__*/function () {
         // newsph.position.set(vertices[0], vertices[1], vertices[2])
         // circle.add(newsph)
 
-        planetInfo.add(newsph);
+        planetInfo.add(newsph); // updateTextPos(planetInfo, this.camera)
+
         ellipse.add(planetInfo);
         this.circles.push(planetInfo);
         ellipse.rotation.set(-Math.PI / 3, inclination, 0); // newsph.rotation.set(- Math.PI /3, inclination, 0)
@@ -428,25 +485,7 @@ var solar = /*#__PURE__*/function () {
       // stars.push(sphere); 
       // renderer.render( scene, camera );
 
-    } // addCircle(newsph, planetName, camera) {
-    //     let p = new THREE.Vector3()
-    //     // newsph.updateMatirx()
-    //     newsph.updateMatrixWorld()
-    //      p = p.setFromMatrixPosition(newsph.matrixWorld)
-    //     const widthHalf = 0.5*window.innerWidth;
-    //     const heightHalf = 0.5*window.innerHeight;
-    // camera.updateMatrixWorld()
-    // camera.updateProjectionMatrix
-    //     let vector = p.project(camera);
-    //     vector.x = ( vector.x * widthHalf ) + widthHalf;
-    //     vector.y = - ( vector.y * heightHalf ) + heightHalf;
-    //     const circles = document.getElementById('circles')
-    //     const circle = document.getElementById(planetName) ? document.getElementById(planetName) : document.createElement('div', {is: `${planetName}`})
-    //     circles.appendChild(circle)
-    //     circle.style.left = vector.x ;
-    //     circle.style.top = vector.y ;
-    // }
-    // render() {
+    } // render() {
     //     //get the frame
     //     // requestAnimationFrame( renderer );
     //     //render the scene
@@ -457,7 +496,7 @@ var solar = /*#__PURE__*/function () {
 
   }]);
 
-  return solar;
+  return Solar;
 }();
 
 
@@ -80746,11 +80785,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_solar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/solar */ "./components/solar.jsx");
 /* harmony import */ var _components_detailpanel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/detailpanel */ "./components/detailpanel.js");
 /* harmony import */ var _utils_detail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/detail */ "./utils/detail.js");
+/* harmony import */ var _components_addtext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/addtext */ "./components/addtext.js");
 
 
 
 
 var OrbitControls = __webpack_require__(/*! three-orbitcontrols */ "./node_modules/three-orbitcontrols/OrbitControls.js");
+
 
 
 
@@ -80765,49 +80806,67 @@ var controls = new OrbitControls(camera, renderer.domElement);
 var raycaster = new three__WEBPACK_IMPORTED_MODULE_2__["Raycaster"]();
 var mouse = new three__WEBPACK_IMPORTED_MODULE_2__["Vector2"]();
 scene.add(Universe);
-var solar = new _components_solar__WEBPACK_IMPORTED_MODULE_5__["default"](camera, Universe, scene);
-
-function onHover() {
-  mouse.set(event.clientX / window.innerWidth * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-  raycaster.setFromCamera(mouse, camera);
-  var intersects = raycaster.intersectObjects(solar.circles);
-
-  for (var i = 0; i < intersects.length; i++) {// intersects[ i ].object.material.color.set( 0xff0000 );
-  }
-}
-
-function onClick() {
-  mouse.set(event.clientX / window.innerWidth * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-  raycaster.setFromCamera(mouse, camera);
-  var intersects = raycaster.intersectObjects(solar.circles);
-
-  if (intersects.length) {
-    var intersect = intersects[0]; // const idx = solar.circles.indexOf(intersect.Object)
-
-    var planet = intersect.object.children[0].userData.planet;
-    debugger;
-    var panel = new _components_detailpanel__WEBPACK_IMPORTED_MODULE_6__["default"](planet);
-  }
-}
-
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update(); // onHover()
-  // onClick()
-
-  renderer.render(scene, camera);
-}
-
+camera.position.z = 400;
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('root');
+  var solar = new _components_solar__WEBPACK_IMPORTED_MODULE_5__["default"](camera, Universe, scene);
+
+  function onHover() {
+    document.body.style.cursor = 'default';
+    mouse.set(event.clientX / window.innerWidth * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
+    raycaster.setFromCamera(mouse, camera);
+    var intersects = raycaster.intersectObjects(solar.circles);
+
+    if (intersects.length) {
+      var intersect = intersects[0];
+      document.body.style.cursor = 'pointer'; // addText(intersect, )
+    }
+  }
+
+  function onClick() {
+    mouse.set(event.clientX / window.innerWidth * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
+    raycaster.setFromCamera(mouse, camera);
+    var intersects = raycaster.intersectObjects(solar.circles);
+
+    if (intersects.length) {
+      var intersect = intersects[0]; // const idx = solar.circles.indexOf(intersect.Object)
+
+      var planet = intersect.object.children[0].userData.planet;
+      var panel = new _components_detailpanel__WEBPACK_IMPORTED_MODULE_6__["default"](planet);
+    } else {
+      var detail = document.getElementById('detail');
+      detail.style.display = 'none';
+    }
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    solar.sun.rotation.y += 0.01;
+
+    for (var i = 0; i < solar.circles.length; i += 1) {
+      Object(_components_addtext__WEBPACK_IMPORTED_MODULE_8__["default"])(solar.circles[i], camera);
+    } // // onHover()
+    // onClick()
+
+
+    renderer.render(scene, camera);
+  }
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
   window.addEventListener('mousemove', onHover, false);
   window.addEventListener('mousedown', onClick, false);
+  window.addEventListener('resize', onWindowResize, false);
   animate();
 
   function Root() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-    camera.position.z = 400;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_starfield__WEBPACK_IMPORTED_MODULE_4__["default"], {
       width: window.innerWidth,
       height: window.innerHeight
@@ -81278,61 +81337,71 @@ var Orbit = {
     mass: 332946.00,
     max_dis: null,
     min_dis: null,
-    inclination: null
+    inclination: null,
+    h: 55
   },
   Mercury: {
     period: 88,
     max_dis: 43.3,
     min_dis: 28.6,
-    inclination: 7.0
+    inclination: 7.0,
+    h: 180
   },
   Venus: {
     period: 225,
     max_dis: 67.6,
     min_dis: 66.7,
-    inclination: 3.4
+    inclination: 3.4,
+    h: 136
   },
   Earth: {
     period: 365,
     max_dis: 94.4,
     min_dis: 91.3,
-    inclination: 0
+    inclination: 0,
+    h: 195
   },
   Mars: {
     period: 365 * 1.9,
     max_dis: 154.7,
     min_dis: 128.3,
-    inclination: 1.9
+    inclination: 1.9,
+    h: 18
   },
   Jupiter: {
     period: 365 * 11.9,
     max_dis: 506.7,
     min_dis: 459.9,
-    inclination: 1.3
+    inclination: 1.3,
+    h: 13
   },
   Saturn: {
     period: 365 * 29.5,
     max_dis: 936,
     min_dis: 837,
-    inclination: 2.5
+    inclination: 2.5,
+    h: 42
   },
   Uranus: {
     period: 365 * 84,
     max_dis: 1867,
     min_dis: 1699,
-    inclination: 0.8
+    inclination: 0.8,
+    h: 195
   },
   Neptune: {
     period: 365 * 165,
     max_dis: 2817,
     min_dis: 2770,
-    inclination: 1.8
+    inclination: 1.8,
+    h: 215
   },
   Pluto: {
     period: 365 * 248,
     max_dis: 4600,
     min_dis: 2760,
-    inclination: 17.2
+    inclination: 17.2,
+    h: 0
   }
 };
 

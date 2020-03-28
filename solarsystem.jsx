@@ -7,6 +7,7 @@ import StarFiled from './components/starfield'
 import Solar from './components/solar'
 import DetailPanel from './components/detailpanel'
 import {Detail }from './utils/detail'
+import updateTextPos from './components/addtext'
 
 
 
@@ -21,74 +22,96 @@ let mouse = new THREE.Vector2();
 
 
 scene.add(Universe)
-const solar = new Solar(camera, Universe,scene)
 
 
-function onHover() {
-  
-  mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
-
-	raycaster.setFromCamera( mouse, camera );
-	var intersects = raycaster.intersectObjects( solar.circles );
-
-	for ( var i = 0; i < intersects.length; i++ ) {
-
-		// intersects[ i ].object.material.color.set( 0xff0000 );
-
-	}
-
-}
-
-function onClick() {
-
-  mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
-
-	raycaster.setFromCamera( mouse, camera );
-	var intersects = raycaster.intersectObjects( solar.circles );
-
-	if ( intersects.length ) {
-    const intersect = intersects[0]
-    // const idx = solar.circles.indexOf(intersect.Object)
-    const planet = intersect.object.children[0].userData.planet
-    debugger
-    const panel = new DetailPanel(planet)
-
-	
-
-	}
-
-}
-
-function animate() {
-
-	requestAnimationFrame( animate );
-  controls.update();
-  // onHover()
-  // onClick()
-
-	renderer.render( scene, camera );
-
-}
-
-
-
-
-
-
-
+camera.position.z = 400;
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('root')
+  const solar = new Solar(camera, Universe,scene)
+
+
+  function onHover() {
+    document.body.style.cursor ='default'
+    mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
+
+    raycaster.setFromCamera( mouse, camera );
+    var intersects = raycaster.intersectObjects( solar.circles );
+
+    if (intersects.length) {
+      const intersect = intersects[0]
+      
+      document.body.style.cursor ='pointer'
+      // addText(intersect, )
+    }
+
+  }
+
+  function onClick() {
+
+    mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
+
+    raycaster.setFromCamera( mouse, camera );
+    var intersects = raycaster.intersectObjects( solar.circles );
+
+    if ( intersects.length ) {
+      const intersect = intersects[0]
+      // const idx = solar.circles.indexOf(intersect.Object)
+      const planet = intersect.object.children[0].userData.planet
+      
+      const panel = new DetailPanel(planet)
+
+    
+
+    }
+    else {
+      const detail = document.getElementById('detail')
+      detail.style.display = 'none'
+    }
+
+  }
+
+  function onWindowResize(){
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+  function animate() {
+
+    requestAnimationFrame( animate );
+    controls.update();
+    solar.sun.rotation.y += 0.01
+    for(let i=0; i< solar.circles.length; i+=1) {
+      updateTextPos(solar.circles[i], camera)
+    }
+    // // onHover()
+    // onClick()
+
+    renderer.render( scene, camera );
+
+  }
+
+
+
+
+
+
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+
   
   window.addEventListener( 'mousemove', onHover, false );
   window.addEventListener( 'mousedown', onClick, false );
+  window.addEventListener( 'resize', onWindowResize, false );
   animate()
     
     
     function Root() {
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
-        camera.position.z = 400;
         return(
             <div>
               
