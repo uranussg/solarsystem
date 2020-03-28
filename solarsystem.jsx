@@ -29,6 +29,7 @@ camera.position.z = 400;
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('root')
   const solar = new Solar(camera, Universe,scene)
+  const starfield = new StarFiled(Universe)
 
 
   function onHover() {
@@ -88,8 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     for(let i=0; i< solar.circles.length; i+=1) {
       updateTextPos(solar.circles[i], camera)
     }
-    // // onHover()
-    // onClick()
 
     renderer.render( scene, camera );
 
@@ -116,8 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div>
               
         <Clock />
-        <StarFiled width={window.innerWidth} height = {window.innerHeight}/>
-        {/* <Solar /> */}
+
         
       </div>
        );

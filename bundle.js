@@ -113,8 +113,8 @@ function updateText(obj, camera) {
   camera.updateProjectionMatrix(); // let vector = obj.uv
 
   var vector = p.project(camera);
-  var x = vector.x * widthHalf + widthHalf;
-  var y = -(vector.y * heightHalf) + heightHalf;
+  var x = vector.x * widthHalf + widthHalf + 20;
+  var y = -(vector.y * heightHalf) + heightHalf - 10;
   var text;
   var container = document.getElementById('text-container');
 
@@ -131,8 +131,8 @@ function updateText(obj, camera) {
 
   text.style.display = 'block';
 
-  if (Math.abs(vector.x) < 0.05 && Math.abs(vector.y) < 0.05) {
-    text.style.display = 'none';
+  if (Math.abs(vector.x) < 0.07 && Math.abs(vector.y) < 0.07) {
+    text.style.opacity = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2)) * 10;
   }
 
   text.style.left = x + 'px';
@@ -255,6 +255,8 @@ function DetailPanel(planet) {
   detail.style.display = 'block';
   var title = document.getElementById('title');
   title.innerText = planet;
+  var category = document.getElementById('category');
+  category.innerText = planetdetail['category'];
   var imgurl = document.getElementById('imgurl');
   imgurl.setAttribute('src', planetdetail['imgurl']);
   var description = document.getElementById('description');
@@ -503,79 +505,46 @@ var Solar = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./components/starfield.jsx":
-/*!**********************************!*\
-  !*** ./components/starfield.jsx ***!
-  \**********************************/
+/***/ "./components/starfield.js":
+/*!*********************************!*\
+  !*** ./components/starfield.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StarField; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _solarsystem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../solarsystem */ "./solarsystem.jsx");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-
-
-
-var StarField = /*#__PURE__*/function (_Component) {
-  _inherits(StarField, _Component);
-
-  var _super = _createSuper(StarField);
-
-  function StarField(props) {
-    var _this;
-
+var StarField = /*#__PURE__*/function () {
+  function StarField(universe) {
     _classCallCheck(this, StarField);
 
-    _this = _super.call(this, props);
-
-    _this.addSphere();
-
-    return _this;
+    this.universe = universe;
+    this.addSphere();
   }
 
   _createClass(StarField, [{
     key: "addSphere",
     value: function addSphere() {
-      var _this$props = this.props,
-          width = _this$props.width,
-          height = _this$props.height;
       var colors = [0xffffff, 0xFFFF00, 0x87cefa]; // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
 
       for (var i = 0; i < 1500; i += 1) {
         // Make a sphere (exactly the same as before). 
         var color = colors[Math.floor(Math.random() * 3)];
-        var geometry = new three__WEBPACK_IMPORTED_MODULE_1__["SphereGeometry"](1.2, 4, 4);
-        var material = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({
+        var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](1.2, 4, 4);
+        var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
           color: color
         });
-        var sphere = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](geometry, material); // var light = new THREE.PointLight( 0xff0000, 5, 100 )
+        var sphere = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](geometry, material); // var light = new THREE.PointLight( 0xff0000, 5, 100 )
 
         var theta = Math.random() * Math.PI;
         var alpha = Math.random() * Math.PI * 2;
@@ -590,26 +559,24 @@ var StarField = /*#__PURE__*/function (_Component) {
         // sphere.scale.x = sphere.scale.y = 2;
         //add the sphere to the Universe
 
-        _solarsystem__WEBPACK_IMPORTED_MODULE_2__["Universe"].add(sphere); // Universe.add( light );
+        this.universe.add(sphere); // Universe.add( light );
         //finally push it to the stars array 
         // stars.push(sphere); 
         // renderer.render( scene, camera );
       }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      //get the frame
-      // requestAnimationFrame( renderer );
-      //render the Universe
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "starfield"
-      });
-    }
+    } // render() {
+    //     //get the frame
+    //     // requestAnimationFrame( renderer );
+    //     //render the Universe
+    //     return(
+    //         <div className='starfield'></div>
+    //     )
+    // }
+
   }]);
 
   return StarField;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}();
 
 
 
@@ -80781,7 +80748,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var _components_clock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/clock */ "./components/clock.js");
-/* harmony import */ var _components_starfield__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/starfield */ "./components/starfield.jsx");
+/* harmony import */ var _components_starfield__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/starfield */ "./components/starfield.js");
 /* harmony import */ var _components_solar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/solar */ "./components/solar.jsx");
 /* harmony import */ var _components_detailpanel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/detailpanel */ "./components/detailpanel.js");
 /* harmony import */ var _utils_detail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/detail */ "./utils/detail.js");
@@ -80810,6 +80777,7 @@ camera.position.z = 400;
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('root');
   var solar = new _components_solar__WEBPACK_IMPORTED_MODULE_5__["default"](camera, Universe, scene);
+  var starfield = new _components_starfield__WEBPACK_IMPORTED_MODULE_4__["default"](Universe);
 
   function onHover() {
     document.body.style.cursor = 'default';
@@ -80852,9 +80820,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for (var i = 0; i < solar.circles.length; i += 1) {
       Object(_components_addtext__WEBPACK_IMPORTED_MODULE_8__["default"])(solar.circles[i], camera);
-    } // // onHover()
-    // onClick()
-
+    }
 
     renderer.render(scene, camera);
   }
@@ -80867,10 +80833,7 @@ document.addEventListener("DOMContentLoaded", function () {
   animate();
 
   function Root() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_starfield__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_clock__WEBPACK_IMPORTED_MODULE_3__["default"], null));
   }
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Root, null), root);

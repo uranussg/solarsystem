@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
-import * as THREE from 'three'
-import {scene, Universe, camera, renderer} from '../solarsystem'
 
-export default class StarField extends Component {
-    constructor(props){
-        super(props)
+import * as THREE from 'three'
+
+
+export default class StarField {
+    constructor(universe){
+        this.universe = universe
         this.addSphere()
     }
         addSphere(){
-            const {width, height} = this.props
             const colors =[0xffffff,0xFFFF00,0x87cefa ]
             // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
             for ( let i= 0; i < 1500; i+=1 ) {
@@ -35,7 +34,7 @@ export default class StarField extends Component {
                 // sphere.scale.x = sphere.scale.y = 2;
     
                 //add the sphere to the Universe
-                Universe.add(sphere)
+                this.universe.add(sphere)
                 // Universe.add( light );
     
                 //finally push it to the stars array 
@@ -45,15 +44,15 @@ export default class StarField extends Component {
 }
 
     
-render() {
-    //get the frame
-    // requestAnimationFrame( renderer );
+// render() {
+//     //get the frame
+//     // requestAnimationFrame( renderer );
 
-    //render the Universe
-    return(
-        <div className='starfield'></div>
-    )
+//     //render the Universe
+//     return(
+//         <div className='starfield'></div>
+//     )
 
 
-}
+// }
 }

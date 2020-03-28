@@ -19,8 +19,8 @@ import * as THREE from 'three'
             let vector = p.project(camera);
             
             
-            const x = ( vector.x * widthHalf ) + widthHalf;
-            const y = - ( vector.y * heightHalf ) + heightHalf;
+            const x = ( vector.x * widthHalf ) + widthHalf + 20;
+            const y = - ( vector.y * heightHalf ) + heightHalf - 10;
             let text
             const container = document.getElementById('text-container')
             if( document.getElementById(planetName) )
@@ -35,8 +35,8 @@ import * as THREE from 'three'
             }
             text.style.display = 'block'
             
-            if(Math.abs(vector.x) < 0.05 && Math.abs(vector.y) < 0.05) {
-                text.style.display = 'none'
+            if(Math.abs(vector.x) < 0.07 && Math.abs(vector.y) < 0.07) {
+                text.style.opacity = Math.sqrt(vector.x ** 2 + vector.y ** 2) * 10
             }
 
             text.style.left = x + 'px';

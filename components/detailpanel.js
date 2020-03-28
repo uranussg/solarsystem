@@ -8,6 +8,9 @@ export default function DetailPanel(planet) {
     const title = document.getElementById('title')
     title.innerText = planet
 
+    const category = document.getElementById('category')
+    category.innerText = planetdetail['category']
+
     const imgurl = document.getElementById('imgurl')
     imgurl.setAttribute('src',planetdetail['imgurl']) 
 
