@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+
 import * as THREE from 'three'
 const OrbitControls = require('three-orbitcontrols')
 import Clock from './components/clock'
@@ -12,15 +11,16 @@ import updateTextPos from './components/addtext'
 
 
 export let scene = new THREE.Scene();
-export let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.01, 2000 );
+export let camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.01, 4000);
 export let renderer = new THREE.WebGLRenderer();
 export let Universe  = new THREE.Object3D()
 export let controls = new OrbitControls( camera, renderer.domElement );
 
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
-
-
+controls.enableDamping = true
+controls.dampingFactor = 0.1
+// debugger
 scene.add(Universe)
 
 
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('root')
   const solar = new Solar(camera, Universe,scene)
   const starfield = new StarFiled(Universe)
+  const clock = new Clock()
 
 
   function onHover() {
@@ -48,28 +49,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  function onClick() {
+  function onClick(e) {
 
-    mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
+    // debugger
 
-    raycaster.setFromCamera( mouse, camera );
-    var intersects = raycaster.intersectObjects( solar.circles );
-
-    if ( intersects.length ) {
-      const intersect = intersects[0]
-      // const idx = solar.circles.indexOf(intersect.Object)
-      const planet = intersect.object.children[0].userData.planet
-      
-      const panel = new DetailPanel(planet)
-
-    
-
+    if (e.target.classList.value == 'text') {
+      DetailPanel(e.target.id)
     }
     else {
-      const detail = document.getElementById('detail')
-      detail.style.display = 'none'
-    }
 
+        mouse.set(( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1)
+
+        raycaster.setFromCamera( mouse, camera );
+        var intersects = raycaster.intersectObjects( solar.circles );
+
+        if ( intersects.length ) {
+          const intersect = intersects[0]
+          // const idx = solar.circles.indexOf(intersect.Object)
+          const planet = intersect.object.children[0].userData.planet
+          
+          DetailPanel(planet)
+
+        
+
+        }
+        else {
+          if (e.target.nodeName === 'CANVAS')
+
+
+          {
+            const detail = document.getElementById('detail')
+            if(detail.classList.contains('active')) detail.classList.replace('active', 'hidden')
+
+        }
+        }
+    }
   }
 
   function onWindowResize(){
@@ -89,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for(let i=0; i< solar.circles.length; i+=1) {
       updateTextPos(solar.circles[i], camera)
     }
+    clock.render()
 
     renderer.render( scene, camera );
 
@@ -105,24 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
   window.addEventListener( 'mousemove', onHover, false );
-  window.addEventListener( 'mousedown', onClick, false );
+  window.addEventListener( 'mouseup', onClick, false );
   window.addEventListener( 'resize', onWindowResize, false );
   animate()
     
     
-    function Root() {
-        return(
-            <div>
-              
-        <Clock />
-
-        
-      </div>
-       );
-    }
-
-  ReactDOM.render(
-	  <Root/>,
-	  root
-  );
+  
 });

@@ -3,19 +3,20 @@ export const Detail = {
         category: 'Yellow Dwarf Star',
         imgurl: 'asset/sun.jpg',
         description: 'The Sun is a yellow dwarf star, a hot ball of glowing gases at the heart of our solar system. Its gravity holds everything from the biggest planets to tiny debris in its orbit.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/sun/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/sun/overview/',
         quickfacts:[{data:{
             left: {
                 color:230,
                 info:'Million Earth Years'
             },
             right: {
-                
+                color:' ',
+                info:' '
             }
         }},
         {label: {
           left:  'Length of Year',
-
+            right: 'No info'
         }
         },
         {data:{
@@ -23,11 +24,15 @@ export const Detail = {
                 infolike: 'Latin Word for Sun: "Sol"'
             },
             right: {
-                
+   
+                    color: ' ',
+                    icon:''
+
             }
         }},
        {label: {
-          left: 'Namesake'
+          left: 'Namesake',
+          right: 'No info'
         }
         }
     ]
@@ -36,7 +41,7 @@ export const Detail = {
         category: 'Terrestrial Planet',
         imgurl: 'asset/mercury.jpg',
         description: 'Mercury—the smallest planet in our solar system and closest to the Sun—is only slightly larger than Earths Moon. Mercury is the fastest planet, zipping around the Sun every 88 Earth days.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/mercury/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/mercury/overview/',
         quickfacts:[{data:{
             left: {
                 color:88,
@@ -58,7 +63,7 @@ export const Detail = {
             },
             right: {
                 color:0,
-                icon:'moon'
+                icon:''
             }
         }},
        {label: {
@@ -73,7 +78,7 @@ export const Detail = {
         category: 'Terrestrial Planet',
         imgurl: 'asset/venus.jpg',
         description: 'Venus spins slowly in the opposite direction from most planets. A thick atmosphere traps heat in a runaway greenhouse effect, making it the hottest planet in our solar system.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/venus/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/venus/overview/',
         quickfacts:[{data:{
             left: {
                 color:225,
@@ -95,7 +100,7 @@ export const Detail = {
             },
             right: {
                 color:0,
-                icon:'moon'
+                icon:''
             }
         }},
        {label: {
@@ -109,7 +114,7 @@ export const Detail = {
         category: 'Terrestrial Planet',
         imgurl: 'asset/earth.jpg',
         description: 'Earth—our home planet—is the only place we know of so far that’s inhabited by living things. Its also the only planet in our solar system with liquid water on the surface.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/earth/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/earth/overview/',
         quickfacts:[{data:{
             left: {
                 color:365,
@@ -131,7 +136,7 @@ export const Detail = {
             },
             right: {
                 color:1,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -145,7 +150,7 @@ export const Detail = {
         category: 'Terrestrial Planet',
         imgurl: 'asset/mars.jpg',
         description: 'Mars is a dusty, cold, desert world with a very thin atmosphere. There is strong evidence Mars was—billions of years ago—wetter and warmer, with a thicker atmosphere.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/mars/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/mars/overview/',
         quickfacts:[{data:{
             left: {
                 color:1.88,
@@ -167,7 +172,7 @@ export const Detail = {
             },
             right: {
                 color:2,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -182,7 +187,7 @@ export const Detail = {
         category: 'Gas Giant',
         imgurl: 'asset/jupiter.jpg',
         description: 'Jupiter is more than twice as massive than the other planets of our solar system combined. The giant planets Great Red spot is a centuries-old storm bigger than Earth',
-        readmore:'https://solarsystem.nasa.gov/solar-system/sun/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/sun/overview/',
         quickfacts:[{data:{
             left: {
                 color:11.86,
@@ -204,7 +209,7 @@ export const Detail = {
             },
             right: {
                 color: 79,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -218,7 +223,7 @@ export const Detail = {
         category: 'Gas Giant',
         imgurl: 'asset/mercury.jpg',
         description: 'Adorned with a dazzling, complex system of icy rings, Saturn is unique in our solar system. The other giant planets have rings, but none are as spectacular as Saturns.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/saturn/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/saturn/overview/',
         quickfacts:[{data:{
             left: {
                 color:29.45,
@@ -240,7 +245,7 @@ export const Detail = {
             },
             right: {
                 color:62,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -254,7 +259,7 @@ export const Detail = {
         category: 'Ice Giant',
         imgurl: 'asset/uranus.jpg',
         description: 'Uranus—seventh planet from the Sun—rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin on its side.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/uranus/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/uranus/overview/',
         quickfacts:[{data:{
             left: {
                 color: 84,
@@ -276,7 +281,7 @@ export const Detail = {
             },
             right: {
                 color:27,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -290,7 +295,7 @@ export const Detail = {
         category: 'Ice Gaint',
         imgurl: 'asset/neptune.jpg',
         description: 'Neptune—the eighth and most distant major planet orbiting our Sun—is dark, cold and whipped by supersonic winds. It was the first planet located through mathematical calculations, rather than by telescope.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/neptune/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/neptune/overview/',
         quickfacts:[{data:{
             left: {
                 color:164,
@@ -312,7 +317,7 @@ export const Detail = {
             },
             right: {
                 color:14,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {
@@ -326,7 +331,7 @@ export const Detail = {
         category: 'Dwarf Planet',
         imgurl: 'asset/pluto.jpg',
         description: 'Pluto is a complex world of ice mountains and frozen plains. Once considered the ninth planet, Pluto is the most massive member of the Kuiper Belt and the best known of a new class of worlds called dwarf planets.',
-        readmore:'https://solarsystem.nasa.gov/solar-system/pluto/overview/',
+        readmore:'https://solarsystem.nasa.gov/planets/pluto/overview/',
         quickfacts:[{data:{
             left: {
                 color:248,
@@ -348,7 +353,7 @@ export const Detail = {
             },
             right: {
                 color:5,
-                icon: 'moon'
+                icon: ''
             }
         }},
        {label: {

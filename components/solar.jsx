@@ -10,6 +10,7 @@ export default class Solar {
         this.universe = universe
         this.scene = scene
         this.circles = []
+        this.path=[]
         this.addSolar()
 
     }
@@ -21,7 +22,7 @@ export default class Solar {
     
                 // Make a sphere (exactly the same as before). 
 
-                const sungeometry   = new THREE.SphereGeometry(0.1, 32, 32)
+                const sungeometry   = new THREE.SphereGeometry(0.21, 32, 32)
                 // const texture = new THREE.TextureLoader().load(`https://solartextures.b-cdn.net/8k_sun.jpg`)
                 const texture = new THREE.TextureLoader().load(`asset/sun_texture.jpg`)
                 const sunmaterial = new THREE.MeshBasicMaterial( { map: texture });
@@ -47,6 +48,7 @@ export default class Solar {
                 //add the sun to the Universe
                 solarSystem.add( sun);
                 this.sun = sun
+                this.circles.push(sun)
                 var suncirclegeometry = new THREE.BufferGeometry();
                 suncirclegeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( [0,0,0], 3 ) );
                 const sunsprite = new THREE.TextureLoader().load( `asset/circle.png` )
@@ -56,7 +58,7 @@ export default class Solar {
 
                 const suncricle = new THREE.Points( suncirclegeometry, suncirclematerial );
                 suncricle.userData.planet = 'Sun'
-                solarSystem.add(suncricle)
+                sun.add(suncricle)
 
                 // var customMaterial= new THREE.ShaderMaterial( 
                 //     {
@@ -183,7 +185,7 @@ export default class Solar {
                 // circle.add(newsph)
 
                 planetInfo.add(newsph)
-                // updateTextPos(planetInfo, this.camera)
+                this.path.push(ellipse)
 
                 ellipse.add(planetInfo)
                 this.circles.push(planetInfo)

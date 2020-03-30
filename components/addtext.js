@@ -27,6 +27,7 @@ import * as THREE from 'three'
             {text = document.getElementById(planetName) }
             else {
                 text = document.createElement('div')
+                text.classList.add('text')
                 text.setAttribute('id', planetName)
                 container.appendChild(text)
                 text.style.position = 'absolute';
@@ -36,7 +37,7 @@ import * as THREE from 'three'
             text.style.display = 'block'
             
             if(Math.abs(vector.x) < 0.07 && Math.abs(vector.y) < 0.07) {
-                text.style.opacity = Math.sqrt(vector.x ** 2 + vector.y ** 2) * 10
+                text.style.opacity = Math.sqrt(vector.x ** 2 + vector.y ** 2) * 8
             }
 
             text.style.left = x + 'px';

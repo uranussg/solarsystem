@@ -10,17 +10,19 @@ export default class StarField {
         addSphere(){
             const colors =[0xffffff,0xFFFF00,0x87cefa ]
             // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
-            for ( let i= 0; i < 1500; i+=1 ) {
+            for ( let i= 0; i < 10000; i+=1 ) {
     
                 // Make a sphere (exactly the same as before). 
                 const color = colors[Math.floor(Math.random()*3)]
-                const geometry   = new THREE.SphereGeometry(1.2, 4, 4)
-                const material = new THREE.MeshBasicMaterial( {color: color} );
+                const radius = (Math.random() ** 4) * 2
+                const geometry   = new THREE.SphereGeometry(radius, 3, 3)
+                const startexture = new THREE.TextureLoader().load('asset/dist.png')
+                const material = new THREE.MeshBasicMaterial( {color: color, map:startexture} );
                 const sphere = new THREE.Mesh(geometry, material)
                 // var light = new THREE.PointLight( 0xff0000, 5, 100 )
-                const theta = Math.random() * Math.PI
+                const theta = Math.PI/2 + (Math.random() ** 1.6 ) * Math.PI/2 * (-1) ** Math.floor(Math.random()*2)
                 const alpha = Math.random() * Math.PI * 2
-                const length = Math.random() * 1000 + 800
+                const length = Math.random() * 1000 + 1200
                 // This time we give the sphere random x and y positions between -500 and 500
                 const y = length * Math.cos(theta)
                 const x = length * Math.sin(theta) * Math.cos(alpha)
