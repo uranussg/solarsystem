@@ -114,7 +114,7 @@ function updateText(obj, camera) {
 
   var vector = p.project(camera);
   var x = vector.x * widthHalf + widthHalf + 20;
-  var y = -(vector.y * heightHalf) + heightHalf - 10;
+  var y = -(vector.y * heightHalf) + heightHalf + 10;
   var text;
   var container = document.getElementById('text-container');
 

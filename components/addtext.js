@@ -20,7 +20,7 @@ import * as THREE from 'three'
             
             
             const x = ( vector.x * widthHalf ) + widthHalf + 20;
-            const y = - ( vector.y * heightHalf ) + heightHalf - 10;
+            const y = - ( vector.y * heightHalf ) + heightHalf +10 ;
             let text
             const container = document.getElementById('text-container')
             if( document.getElementById(planetName) )
