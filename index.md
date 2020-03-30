@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="application.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="bundle.js"></script>
+    <title>Solar System</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <div class='clock'>
+      <div class='clock-container'>
+        <p id='time'></p>
+        <p id='date'></p>
+      </div>
+    </div>
+    <aside id='left-panel'>
+
+      <div id='detail' >
+        <div class='container content'>
+
+        <h1 id='title'></h1>
+        <p id='category'></p>
+        
+        <img id='imgurl' src="" alt="">
+        <p id='description'>dsfasgdfaert</p>
+        <a id='readmore' href="">READ MORE</a>
+          <table id="quickfacts">
+            <tr class="data">
+              <td class="halfdata left">
+                <span class="dataspan">
+                  <div class="color"></div>
+                  <div class="info"></div>
+                </span>
+              </td>
+              <td class="halfdata right">
+                <span class="dataspan">
+                  <div class="color"></div>
+                  <div class="info"></div>
+                </span>
+              </td>
+            </tr>
+            <tr class='label'>
+              <td class="halflabel left">
+                <span></span>
+              </td>
+              <td class="halflabel right">
+                <span></span>
+              </td>
+            </tr>
+            <tr class="data">
+              <td class="halfdata left">
+                <span class="dataspan">
+                  <div class="infolike"></div>
+                </span>
+              </td>
+              <td class="halfdata right">
+                <span class="dataspan">
+                  <div class="color"></div>
+                  <div class="icon"></div>
+                </span>
+              </td>
+            </tr>
+            <tr class="label">
+              <td class="halflabel left">
+                <span></span>
+              </td>
+              <td class="halflabel right">
+                <span></span>
+              </td>
+            </tr>
+          </table>
+          <div class="explaination">AU: Astronomical Unit, the distance between the Earth and the Sun.</div>
+        </div>
+      </div>
+  </aside>
+
+
+    <div id='text-container'>
+      <div id=''></div>
+    </div>
+
+    <div class="bottom-panel">
+      <div id='navigation-bar'>
+        <button value="solar-system">
+          <span>Solar System</span>
+        </button>
+        <button value="inner_solar_system">
+          <span>Inner Solar System</span>
+        </button>
+      </div>
+    </div>
+
+</body>
+</html>
