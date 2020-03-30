@@ -21,7 +21,7 @@ aside{
 }
 
 #detail {
-    height: 710px;
+    height: auto;
     border: 1px solid hsla(0,0%,100%,0.2);
     overflow: auto;
     position: absolute;
@@ -73,7 +73,7 @@ aside{
 }
 #detail .container {
     color: #fff;
-    padding-top: 1em;
+    padding: 0.5em 0;
     height: auto;
 }
 
@@ -229,6 +229,7 @@ td {
     opacity: 0.75;
     margin: 0;
     padding: 0 2vw;
+    padding-bottom: 1vw;
     width: 100%;
 }
 
@@ -255,7 +256,7 @@ td {
     margin: 0 auto;
     position: absolute;
     left: 50%;
-    top: 1vw;
+    top: 2vw;
     transform: translateX(-50%);
     box-sizing: border-box;
 } 
