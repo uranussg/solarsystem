@@ -20,7 +20,7 @@ import * as THREE from 'three'
             
             
             const x = ( vector.x * widthHalf ) + widthHalf + 20;
-            const y = - ( vector.y * heightHalf ) + heightHalf +10 ;
+            const y = - ( vector.y * heightHalf ) + heightHalf -10 ;
             let text
             const container = document.getElementById('text-container')
             if( document.getElementById(planetName) )
@@ -39,11 +39,12 @@ import * as THREE from 'three'
             if(Math.abs(vector.x) < 0.07 && Math.abs(vector.y) < 0.07) {
                 text.style.opacity = Math.sqrt(vector.x ** 2 + vector.y ** 2) * 8
             }
+            else {
+                text.style.opacity = 0.8
+            }
 
             text.style.left = x + 'px';
             text.style.top = y + 'px';
             // text.style.transform = "translate("+vector.x+"px,"+vector.y+"px)";
-
-
 
         }

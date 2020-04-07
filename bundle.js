@@ -114,7 +114,7 @@ function updateText(obj, camera) {
 
   var vector = p.project(camera);
   var x = vector.x * widthHalf + widthHalf + 20;
-  var y = -(vector.y * heightHalf) + heightHalf + 10;
+  var y = -(vector.y * heightHalf) + heightHalf - 10;
   var text;
   var container = document.getElementById('text-container');
 
@@ -134,6 +134,8 @@ function updateText(obj, camera) {
 
   if (Math.abs(vector.x) < 0.07 && Math.abs(vector.y) < 0.07) {
     text.style.opacity = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2)) * 8;
+  } else {
+    text.style.opacity = 0.8;
   }
 
   text.style.left = x + 'px';
@@ -591,6 +593,46 @@ var StarField = /*#__PURE__*/function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./components/travel.js":
+/*!******************************!*\
+  !*** ./components/travel.js ***!
+  \******************************/
+/*! exports provided: initialView, travel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialView", function() { return initialView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "travel", function() { return travel; });
+function initialView(camera, controls) {
+  // camera.up.set(1, 0, 0)
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 30;
+  window.setTimeout(function () {
+    controls.autoRotate = false; // camera.up.set(0, 1, 0)
+  }, 5000);
+}
+function travel(camera, control) {
+  var outer = document.getElementById('solar-system');
+  var inner = document.getElementById('inner-solar-system');
+  outer.addEventListener('click', function () {
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 500;
+    camera.updateMatrixWorld();
+    camera.updateProjectionMatrix();
+  });
+  inner.addEventListener('click', function () {
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 40;
+    camera.updateMatrixWorld();
+    camera.updateProjectionMatrix();
+  });
+}
 
 /***/ }),
 
@@ -54427,9 +54469,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_detailpanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/detailpanel */ "./components/detailpanel.js");
 /* harmony import */ var _utils_detail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/detail */ "./utils/detail.js");
 /* harmony import */ var _components_addtext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/addtext */ "./components/addtext.js");
+/* harmony import */ var _components_travel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/travel */ "./components/travel.js");
 
 
 var OrbitControls = __webpack_require__(/*! three-orbitcontrols */ "./node_modules/three-orbitcontrols/OrbitControls.js");
+
 
 
 
@@ -54448,12 +54492,13 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.1; // debugger
 
 scene.add(Universe);
-camera.position.z = 400;
+camera.position.z = 500;
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('root');
   var solar = new _components_solar__WEBPACK_IMPORTED_MODULE_3__["default"](camera, Universe, scene);
   var starfield = new _components_starfield__WEBPACK_IMPORTED_MODULE_2__["default"](Universe);
   var clock = new _components_clock__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  window.camera = camera;
 
   function onHover() {
     document.body.style.cursor = 'default';
@@ -54510,7 +54555,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  document.body.appendChild(renderer.domElement); // initialView(camera, controls)
+
+  Object(_components_travel__WEBPACK_IMPORTED_MODULE_7__["travel"])(camera);
   window.addEventListener('mousemove', onHover, false);
   window.addEventListener('mouseup', onClick, false);
   window.addEventListener('resize', onWindowResize, false);

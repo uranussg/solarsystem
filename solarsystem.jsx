@@ -7,6 +7,7 @@ import Solar from './components/solar'
 import DetailPanel from './components/detailpanel'
 import {Detail }from './utils/detail'
 import updateTextPos from './components/addtext'
+import {travel, initialView} from './components/travel'
 
 
 
@@ -24,13 +25,15 @@ controls.dampingFactor = 0.1
 scene.add(Universe)
 
 
-camera.position.z = 400;
+camera.position.z = 500;
 
 document.addEventListener("DOMContentLoaded", () => {
+
   const root = document.getElementById('root')
   const solar = new Solar(camera, Universe,scene)
   const starfield = new StarFiled(Universe)
   const clock = new Clock()
+  window.camera = camera
 
 
   function onHover() {
@@ -118,6 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
+  // initialView(camera, controls)
+  travel(camera)
   
   window.addEventListener( 'mousemove', onHover, false );
   window.addEventListener( 'mouseup', onClick, false );
