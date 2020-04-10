@@ -345,3 +345,45 @@ button:hover {
     opacity: 1;
     cursor: pointer;
 }
+
+
+.contact {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex
+}
+
+.contact div {
+    /* padding: 16px; */
+    margin: 0 8px;
+    border-radius: 1rem;
+    width: 24px;
+    height: 24px;
+    
+    position: relative;
+    box-sizing: content-box;
+}
+
+
+/* span {
+    width: 0;
+    height: 0;
+ } */
+
+.github {
+    width: 100%;
+    background-color: white;
+    background-size: 100%;
+    background-image: url('asset/github.svg');
+    /* background-repeat: no-repeat; */
+    
+}
+
+.linkedin {
+    width: 100%;
+    background-image: url('asset/linkedin.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: 16px;
+}
